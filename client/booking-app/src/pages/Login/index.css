@@ -1,0 +1,18 @@
+Form{
+    position: absolute;
+    top: 15%;
+    left: 35%;
+    width: 400px;
+}
+Button{
+    width: 400px;
+    margin-top: 10px;
+}
+
+Input{
+    width: 400px;
+    background-color: black;
+}
+div.ant-form-item-additional{
+    align-self: flex-start;
+}
