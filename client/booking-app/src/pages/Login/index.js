@@ -14,6 +14,8 @@ const Login = () => {
     console.log(response);
     if(response.success){
       message.success(response.message);
+      const jwtToken = response.accessToken;
+      localStorage.setItem("token",jwtToken);
       navigate("/");
     }
     else{

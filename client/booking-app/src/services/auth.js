@@ -6,7 +6,7 @@ export const RegisterUser= async (data)=>{
        return response.data;
 
     }catch(err){
-        return err.response;
+        return err.response.data;
     }
 }
 
@@ -17,7 +17,7 @@ export const LoginUser= async (data)=>{
        return response.data;
 
     }catch(err){
-        return err.response;
+        return err.response.data;
     }
 }
 
