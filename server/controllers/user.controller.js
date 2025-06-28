@@ -39,6 +39,7 @@ const onLogin = async(req,res)=>{
             success:true, 
             message:"Successfully Logged in",
             accessToken:token,
+            username: existingUser.username,
         })
 
     }catch(err){

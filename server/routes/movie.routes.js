@@ -1,4 +1,4 @@
-const { getAllMovies, getMovieById, addMovie, createBooking, deleteMovieByID, updateMovieByID } = require("../controllers/movies.controller");
+const { getAllMovies, getMovieById, addMovie, createBooking, deleteMovieByID, updateMovieByID, getMovieSuggestion, getSearchedMovie } = require("../controllers/movies.controller");
 const {verifyJWT, verifyAdmin} = require("../middlewares/auth.middleware");
 const { verifyCreateMovieRequest } = require("../middlewares/movie.middleware");
 
@@ -9,5 +9,8 @@ module.exports = (app) =>{
     app.post('/movies',[verifyJWT,verifyAdmin,verifyCreateMovieRequest],addMovie);         // authenticated + authorized admin
     // app.pos(t('/booking',[verifyJWT],createBooking);   //authenticated user
     app.delete('/movies/:id',[verifyJWT, verifyAdmin], deleteMovieByID);
-    app.put('/movies/:id',[verifyJWT, verifyAdmin], updateMovieByID)
+    app.put('/movies/:id',[verifyJWT, verifyAdmin], updateMovieByID);
+    app.get('/suggestions', getMovieSuggestion);
+    app.get('/search', getSearchedMovie)
+
 }

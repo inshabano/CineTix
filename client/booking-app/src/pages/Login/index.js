@@ -16,6 +16,7 @@ const Login = () => {
       message.success(response.message);
       const jwtToken = response.accessToken;
       localStorage.setItem("token",jwtToken);
+      localStorage.setItem('username', response.username);
       navigate("/");
     }
     else{

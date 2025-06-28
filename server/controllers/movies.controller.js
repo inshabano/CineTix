@@ -145,11 +145,54 @@ const updateMovieByID = async(req, res) =>{
     }  
 }
 
+const getMovieSuggestion = async(req,res)=>{
+     try {
+        const { query } = req.query;
+        if (!query) {
+            return res.send({ success: true, data: [] });
+        }
+        const suggestions = await movieModel.find(
+            { movieName: { $regex: query, $options: 'i' } },
+            { movieName: 1, _id: 0 }
+        ).limit(10);
+
+        const movieNames = suggestions.map(movie => movie.movieName);
+        res.send({ success: true, data: movieNames });
+
+    } catch (error) {
+        console.error("Error fetching movie suggestions:", error);
+        res.status(500).send({ success: false, message: "Internal server error for suggestions." });
+    }
+}
+const getSearchedMovie = async(req,res)=>{
+    try {
+        const { query } = req.query; // Get query parameter from URL (e.g., ?query=batman)
+        if (!query) {
+            // Optional: return all movies if search query is empty, or an empty array
+            const allMovies = await movieModel.find({});
+            return res.send({ success: true, data: allMovies });
+        }
+
+        // Case-insensitive partial match on movieName for full movie details
+        const movies = await movieModel.find({
+            movieName: { $regex: query, $options: 'i' }
+        });
+
+        res.send({ success: true, data: movies });
+
+    } catch (error) {
+        console.error("Error fetching search results:", error);
+        res.status(500).send({ success: false, message: "Internal server error for search." });
+    }
+}
+
 module.exports = {
     getAllMovies,
     getMovieById,
     addMovie,
     createBooking,
     deleteMovieByID,
-    updateMovieByID
+    updateMovieByID,
+    getMovieSuggestion,
+    getSearchedMovie
 }
