@@ -23,11 +23,20 @@ export const searchMoviesSuggestions = async (query) => {
 
 export const searchMovies = async (query) => {
     try {
-        // Adjust API path to match your backend
         const response = await axiosInstance.get(`http://localhost:5000/search`, { params: { query } });
-        return response.data; // Expected: { success: true, data: [movieObject1, movieObject2] }
+        return response.data;
     } catch (error) {
         console.error("Error fetching search results:", error);
         return { success: false, data: [], message: error.response?.data?.message || "Failed to fetch search results" };
     }
 };
+
+export const getMovieData = async (movieid)=> {
+    console.log(movieid)
+    try{
+        const response = await axiosInstance.get(`http://localhost:5000/movies/${movieid}`);
+        return response.data;
+    }catch(err){
+        return err.response;
+    }
+}

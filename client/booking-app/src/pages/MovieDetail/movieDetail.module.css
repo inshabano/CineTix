@@ -1,0 +1,117 @@
+.container {
+    padding: 50px 40px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: #222;
+}
+
+.posterDetailsBackground {
+    position: relative;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.posterDetailsOverlay {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    padding: 70px;
+    z-index: 1;
+}
+
+.poster {
+    width: 280px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.details {
+    flex: 1;
+    text-align: left;
+}
+
+.details h2 {
+    font-size: 34px;
+    margin-bottom: 12px;
+    color: #111;
+    font-family: 'Roboto', sans-serif;
+    font-weight:700;
+    
+}
+
+.details p {
+    font-size: 16px;
+    margin: 6px 0;
+    line-height: 1.5;
+    color: #444;
+}
+
+.aboutSection {
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.aboutSection h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.aboutSection p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.peopleSection {
+    margin-bottom: 60px;
+    text-align: left;
+}
+
+.peopleSection h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #2c2c2c;
+}
+
+.castList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 10px 0;
+}
+
+.personCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    text-align: center;
+}
+
+.personPhoto {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
+    background-color: #fff;
+}
+
+.personName {
+    font-size: 14px;
+    color: #333;
+    margin-top: 4px;
+}
