@@ -166,14 +166,11 @@ const getMovieSuggestion = async(req,res)=>{
 }
 const getSearchedMovie = async(req,res)=>{
     try {
-        const { query } = req.query; // Get query parameter from URL (e.g., ?query=batman)
+        const { query } = req.query; 
         if (!query) {
-            // Optional: return all movies if search query is empty, or an empty array
             const allMovies = await movieModel.find({});
             return res.send({ success: true, data: allMovies });
         }
-
-        // Case-insensitive partial match on movieName for full movie details
         const movies = await movieModel.find({
             movieName: { $regex: query, $options: 'i' }
         });

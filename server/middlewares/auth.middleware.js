@@ -30,14 +30,24 @@ const verifyJWT = async (req, res, next) => {
 };
 
 const verifyAdmin = (req, res, next) => {
-    const userType = req.userDetails?.userType;  // optional chaining, safe check
+    const userType = req.userDetails?.userType;  
     if (userType !== "admin") {
         return res.status(403).send({ success: false, message: "You are not authorised to access this page." });
     }
     next();
 };
 
+const verifyAdminOrPartner = (req, res, next) => {
+    const userType = req.userDetails?.userType;  
+    if (userType !== "partner" && userType !== "admin") {
+        return res.status(403).send({ success: false, message: "You are not authorised to access this page." });
+    }
+    next();
+};
+
+
 module.exports = {
     verifyJWT,
-    verifyAdmin
+    verifyAdmin,
+    verifyAdminOrPartner
 };

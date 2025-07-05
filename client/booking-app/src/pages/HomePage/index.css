@@ -1,9 +1,40 @@
-
 .main-content-area {
-    margin-top: 50px; 
-    padding: 20px;
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
 }
-.movie-card{
-    margin-left: 10px;
-    cursor: pointer;
+
+.movie-link {
+  text-decoration: none;
+  color: white;
+  margin: 5px;
+}
+
+.movie-card {
+  background-color: #0f0f0f;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.4s ease;
+  margin-top: 15px;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  color: white;
+}
+
+.movie-card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.movie-card h3 { 
+  font-size: 15px;
+  font-weight: bold;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  
 }

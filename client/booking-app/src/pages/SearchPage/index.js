@@ -1,10 +1,11 @@
 // src/pages/SearchPage/SearchPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import Navbar from '../../components/navbar';
 import { Flex } from 'antd';
 import { searchMovies } from '../../services/movies';
 import styles from './search.module.css';
+import Footer from '../../components/footer';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -56,6 +57,7 @@ const SearchPage = () => {
                 {!loading && !error && searchResults.length > 0 && (
                     <Flex vertical gap="30px" className={styles['results-container']}>
                         {searchResults.map((movie) => (
+                             <Link to={`/movie/${movie._id}`}>
                             <div key={movie._id} className={styles['movie-card']}>
                                 <img
                                     src={movie.poster}
@@ -77,10 +79,12 @@ const SearchPage = () => {
                                     <p className={styles['movie-info']}><strong>Language:</strong> {movie.language}</p>
                                 </div>
                             </div>
+                            </Link>
                         ))}
                     </Flex>
                 )}
             </div>
+            <Footer/>
         </div>
     );
 };

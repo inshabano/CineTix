@@ -1,3 +1,4 @@
+
 .container {
     padding: 50px 40px;
     background-color: #f5f5f5;
@@ -39,20 +40,45 @@
 }
 
 .details h2 {
-    font-size: 34px;
-    margin-bottom: 12px;
+    font-size: 45px;
+    margin-bottom: 20px;
     color: #111;
     font-family: 'Roboto', sans-serif;
-    font-weight:700;
+    font-weight:700
     
 }
 
 .details p {
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: 400;
     margin: 6px 0;
     line-height: 1.5;
-    color: #444;
+    color: #250101;
 }
+
+.bookButton {
+  background-color: #ef424a;
+  color: white;
+  padding: 18px;
+  width: 250px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.bookButton:hover {
+  background-color: #e02f38;
+  transform: scale(1.05);
+}
+
+.bookButton:active {
+  transform: scale(0.98);
+}
+
 
 .aboutSection {
     margin-bottom: 50px;
@@ -67,16 +93,19 @@
 
 .aboutSection p {
     font-size: 16px;
+    font-weight:400;
     line-height: 1.6;
-    color: #555;
-    background-color: #fff;
+    color: #0b0b0b;
+    background-color: #faeaea;
     padding: 20px;
     border-radius: 10px;
 }
 
 .peopleSection {
     margin-bottom: 60px;
+    padding-left: 6px;
     text-align: left;
+    background-color: rgb(228, 248, 248);
 }
 
 .peopleSection h3 {
@@ -90,6 +119,7 @@
     flex-wrap: wrap;
     gap: 25px;
     padding: 10px 0;
+    background-color: #f5f5f5;
 }
 
 .personCard {
