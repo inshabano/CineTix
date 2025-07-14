@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import SearchPage from './pages/SearchPage';
 import MovieDetail from './pages/MovieDetail';
 import Booking from './pages/Booking';
+import TheatresShowsPage from './pages/TheatresShowsPage';
 import 'react-calendar/dist/Calendar.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/search' element={<SearchPage />}/>
         <Route path='/movie/:movieid' element = {<MovieDetail/>}/>
         <Route path='/movie/:movieid/booking' element = {<Booking/>}/>
+         <Route path='/movie/:movieid/shows/:date' element={<TheatresShowsPage />} />
                
 
       </Routes>

@@ -1,0 +1,106 @@
+const movieModel = require("../models/movie.model");
+const showModel = require("../models/show.model");
+const theatreModel = require("../models/theatre.model");
+
+const createShow = async (req, res) =>{
+    const {movie, theatre, showDate, showTime, totalSeats} = req.body;
+    try{
+       const getTheatre = await theatreModel.findById(theatre);
+       if(getTheatre == null){
+        return res.status(400).send({success:false, message: "Please enter correct theatre ID"})
+       }
+       const getMovie = await movieModel.findById(movie);
+       if(getMovie == null){
+        return res.status(400).send({success:false, message: "Please enter correct Movie ID"})
+       }
+
+       const newShow = new showModel(req.body);
+       const response = await newShow.save();
+       return res.status(201).send({
+        success:true,
+        message: "New Show has been added successfully.",
+        data: response
+       })
+       
+    }catch(err){
+        return res.status(500).send({message: "Something went wrong. Please try again"})
+    }
+
+}
+
+const getAllShows =async (req,res) => {
+    try{
+        const allShows = await showModel.find({}).populate('movie').populate('theatre');
+        return res.status(200).send({
+                success: true,
+                message: "All show has been fetched",
+                data: allShows,
+            })
+    }catch(err){
+        return res.status(500).send({message:"Something went wrong. Please try again."})
+    }
+}
+
+
+const getTheatresAndShowsByMovie = async (req, res) => {
+    const { movieid } = req.params;
+    const { date } = req.query;
+    try {
+        const getMovie = await movieModel.findById(movieid);
+        if (!getMovie) {
+            return res.status(400).send({ success: false, message: "Please enter correct Movie ID" });
+        }
+
+        const filter = { movie: movieid };
+        if (date) {
+            const selectedDate = new Date(date); 
+            selectedDate.setUTCHours(0, 0, 0, 0); 
+            const nextDay = new Date(selectedDate);
+            nextDay.setUTCDate(selectedDate.getUTCDate() + 1); 
+
+            filter.showDate = {
+                $gte: selectedDate, 
+                $lt: nextDay       
+            };
+        }
+        const allShows = await showModel.find(filter).populate('theatre').populate('movie');
+
+        let showsByTheatreId = {};
+        allShows.forEach(show => {
+            if (!show.theatre || !show.movie) return;
+
+            const theatreId = show.theatre._id.toString();
+            if (!showsByTheatreId[theatreId]) {
+                showsByTheatreId[theatreId] = {
+                    _id: show.theatre._id,
+                    name: show.theatre.name,
+                    address: show.theatre.address,
+                    showtimes: []
+                };
+            }
+            showsByTheatreId[theatreId].showtimes.push({
+                showId: show._id,
+                time: show.showTime,
+                totalSeats: show.totalSeats,
+            });
+        });
+
+        const theatresWithShows = Object.values(showsByTheatreId);
+
+        return res.status(200).send({
+            success: true,
+            message: "Fetched all the shows for the movie successfully",
+            data: theatresWithShows
+        });
+
+    } catch (err) {
+        console.error("Error in getTheatresAndShowsByMovie:", err);
+        return res.status(500).send({ success: false, message: "Something went wrong. Please try again." });
+    }
+}
+
+module.exports = {
+    createShow,
+    getAllShows,
+    getTheatresAndShowsByMovie
+}

@@ -1,0 +1,415 @@
+.container {
+    padding: 50px 0 0px 0px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: #222;
+}
+
+.loadingMessage, .errorMessage, .noShowsMessage {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5em;
+    color: #666;
+}
+
+.errorMessage {
+    color: #dc3545;
+}
+
+.movieHeader {
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #fff;
+    padding: 20px 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 1o00px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.movieHeader h1 {
+    font-size: 2.8em;
+    color: #1a1a1a;
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.movieLanguage {
+    font-size: 0.7em;
+    color: #666;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.movieGenres {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.genreTag {
+    background-color: #e0e0e0;
+    color: #555;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+.horizontalCalendar {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 40px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f1f1f1;
+}
+
+.horizontalCalendar::-webkit-scrollbar {
+    height: 8px;
+}
+.horizontalCalendar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.horizontalCalendar::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.horizontalCalendar::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+
+.dateCard {
+    flex-shrink: 0;
+    width: 90px;
+    padding: 15px 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dateCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.selectedDateCard {
+    background-color: #ef424a;
+    color: white;
+    border-color: #ef424a;
+    box-shadow: 0 4px 15px rgba(239, 66, 74, 0.4);
+}
+
+.selectedDateCard .dayOfWeek,
+.selectedDateCard .monthShort {
+    color: white;
+}
+
+.dayOfWeek {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.dayOfMonth {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.monthShort {
+    font-size: 0.8em;
+    color: #777;
+    font-weight: 600;
+}
+
+
+.theatreList {
+    display: grid;
+    gap: 25px;
+    padding: 10px;
+    max-width: 2000px;
+    margin-left: 30px;
+    margin-bottom: 40px;
+}
+
+.theatreCard {
+    background-color: #fff;
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid #ef424a;
+    transition: transform 0.2s ease;
+    
+}
+
+.theatreCard:hover {
+    transform: translateY(-5px);
+}
+
+.theatreCardContent {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 20px; 
+    
+}
+
+.theatreDetails {
+    flex-grow: 1; 
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-right: 70px; 
+    border-right: 1px solid #eee; 
+    min-width: 180px; 
+}
+
+.theatreNameWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+
+
+.theatreCard h3 {
+    color: #1a1a1a;
+    margin: 0; 
+    font-weight: 600;
+}
+
+.theatreAddress {
+    color: #0d0d0d;
+    font-size: 1em; 
+    margin-left: 0px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.theatreFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.featureIcon {
+    font-size: 0.85em;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.featureIcon::before {
+    font-size: 1.1em; 
+}
+
+
+.showtimesWrapper {
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-shrink: 0;
+    padding-left: 90px;
+    justify-content: flex-start;
+}
+
+.showtimeBtn {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 15px 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-start;
+    line-height: 1.2;
+    box-shadow: none;
+    min-width: 100px;
+}
+
+.showtimeBtn:hover {
+    background-color: #d0d0d0;
+    border-color: #a0a0a0;
+    transform: translateY(-1px);
+}
+
+.showtimeBtn.highlighted {
+    background-color: #f7e09e;
+    border-color: #f5c400;
+    color: #333;
+    font-weight: bold;
+}
+
+.showtimeType {
+    font-size: 0.7em;
+    margin-top: 3px;
+    color: #666;
+    font-weight: normal;
+}
+
+.noShowtimesForTheatre {
+    color: #999;
+    font-style: italic;
+    font-size: 0.9em;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 80px 20px 30px 20px;
+    }
+    .movieHeader h1 {
+        font-size: 2.2em;
+    }
+    .horizontalCalendar {
+        gap: 10px;
+        justify-content: flex-start;
+        padding: 0 10px 10px;
+    }
+    .dateCard {
+        width: 80px;
+        padding: 12px 5px;
+    }
+    .dayOfMonth {
+        font-size: 1.8em;
+    }
+    .theatreList {
+        padding: 0 10px;
+    }
+    .theatreCardContent {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    .theatreDetails {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding-right: 0;
+        padding-bottom: 15px;
+        min-width: unset;
+    }
+    .showtimesWrapper {
+        padding-left: 0;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 70px 15px 20px 15px;
+    }
+    .movieHeader h1 {
+        font-size: 1.8em;
+    }
+    .movieGenres {
+        gap: 8px;
+    }
+    .genreTag {
+        font-size: 0.85em;
+        padding: 5px 10px;
+    }
+    .horizontalCalendar {
+        gap: 8px;
+        padding: 0 5px 10px;
+    }
+    .dateCard {
+        width: 70px;
+        padding: 10px 3px;
+    }
+    .dayOfWeek {
+        font-size: 0.8em;
+    }
+    .dayOfMonth {
+        font-size: 1.6em;
+    }
+    .monthShort {
+        font-size: 0.7em;
+    }
+    .theatreCard {
+        padding: 15px;
+    }
+    .theatreCard h3 {
+        font-size: 1.3em;
+    }
+    .theatreAddress {
+        font-size: 0.85em;
+    }
+    .featureIcon {
+        font-size: 0.8em;
+    }
+    .infoIcon {
+        font-size: 0.8em;
+    }
+    .cancellationInfo {
+        font-size: 0.75em;
+    }
+    .showtimeBtn {
+        padding: 7px 12px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 60px 10px 15px 10px;
+    }
+    .movieHeader h1 {
+        font-size: 1.5em;
+    }
+    .horizontalCalendar {
+        gap: 6px;
+        padding: 0 2px 8px;
+    }
+    .dateCard {
+        width: 60px;
+        padding: 8px 2px;
+        font-size: 0.9em;
+    }
+    .dayOfMonth {
+        font-size: 1.4em;
+    }
+    .theatreCard h3 {
+        font-size: 1.2em;
+    }
+    .showtimeBtn {
+        padding: 6px 10px;
+        font-size: 0.85em;
+    }
+}
