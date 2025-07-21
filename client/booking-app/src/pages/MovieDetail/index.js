@@ -51,7 +51,7 @@ const MovieDetail = () => {
     const handleDateSelect = (date) => {
         const formattedDate = getLocalFormattedDateString(date);
         setShowCalendar(false);
-        navigate(`/movie/${movieid}/shows/${formattedDate}`);
+        navigate(`/movie/${movieid}/shows?date=${formattedDate}`);
     };
 
     if (!movie) {

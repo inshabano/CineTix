@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useLocation, Link } from 'react-router-dom';
 import styles from './TheatresShowsPage.module.css';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { getTheatresAndShowtimes } from '../../services/shows';
 import { getMovieData } from '../../services/movies';
+
+
 
 const getLocalFormattedDateString = (date) => {
     const year = date.getFullYear();
@@ -16,25 +18,25 @@ const getLocalFormattedDateString = (date) => {
 const TheatresShowsPage = () => {
     const { movieid } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
-    const navigate = useNavigate();
 
-    const [selectedDate, setSelectedDate] = useState(() => {
-        const dateParam = searchParams.get('date');
-        let initialDate;
-        if (dateParam) {
-            const parts = dateParam.split('-');
-            initialDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-        } else {
-            initialDate = new Date();
-        }
-        initialDate.setHours(0, 0, 0, 0);
-        return initialDate;
-    });
+   const [selectedDate, setSelectedDate] = useState(() => {
+    const dateParam = searchParams.get('date');
+    let initialDate;
+    if (dateParam) {
+        const parts = dateParam.split('-');
+        initialDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    } else {
+        initialDate = new Date();
+    }
+    initialDate.setHours(0, 0, 0, 0);
+    return initialDate;
+});
 
     const [theatres, setTheatres] = useState([]);
     const [movieDetails, setMovieDetails] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,6 +74,41 @@ const TheatresShowsPage = () => {
 
         fetchData();
     }, [movieid, selectedDate]);
+    useEffect(() => {
+    const fetchData = async () => {
+        setIsLoading(true);
+        setError(null);
+
+        const formattedDate = getLocalFormattedDateString(selectedDate);
+
+        try {
+            const movieResponse = await getMovieData(movieid);
+            if (movieResponse && movieResponse.success) {
+                setMovieDetails(movieResponse.data);
+            } else {
+                setError(movieResponse?.message || "Failed to load movie details.");
+                setIsLoading(false);
+                return;
+            }
+
+            const showsResponse = await getTheatresAndShowtimes(movieid, formattedDate);
+            if (showsResponse && showsResponse.success) {
+                setTheatres(showsResponse.data);
+            } else {
+                setError(showsResponse?.message || "Failed to load theatres and showtimes.");
+                setTheatres([]);
+            }
+        } catch (err) {
+            setError("An error occurred while fetching data. Please try again.");
+            setTheatres([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    fetchData();
+}, [movieid, selectedDate, location.search]);
+
 
     const getCalendarDates = () => {
         const dates = [];
@@ -183,14 +220,16 @@ const TheatresShowsPage = () => {
                                                 return timeA - timeB;
                                             })
                                             .map(showtime => (
-                                                <button
-                                                    key={showtime.showId}
+                                                <Link
+                                                    to={`/booking/${showtime.showId}`}
+                                                    key={showtime.showId} 
                                                     className={styles.showtimeBtn}
-                                                    onClick={() => navigate(`/booking/${showtime.showId}`)}
                                                 >
+                                                   
                                                     {showtime.time}
                                                     {showtime.type && <span className={styles.showtimeType}>{showtime.type}</span>}
-                                                </button>
+                                                </Link>
+                                                 
                                             ))
                                     ) : (
                                         <p className={styles.noShowtimesForTheatre}>No showtimes for this theatre on this date.</p>

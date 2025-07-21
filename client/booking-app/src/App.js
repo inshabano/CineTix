@@ -10,26 +10,20 @@ import TheatresShowsPage from './pages/TheatresShowsPage';
 import 'react-calendar/dist/Calendar.css';
 
 function App() {
-  return (
-    <div className='App'>
-      
-      <BrowserRouter>
-      <Routes>
-
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/search' element={<SearchPage />}/>
-        <Route path='/movie/:movieid' element = {<MovieDetail/>}/>
-        <Route path='/movie/:movieid/booking' element = {<Booking/>}/>
-         <Route path='/movie/:movieid/shows/:date' element={<TheatresShowsPage />} />
-               
-
-      </Routes>
-      </BrowserRouter>
-
-    </div>
-    
-  );
+    return (
+        <div className='App'>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<Home/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='/register' element={<Register/>}/>
+                    <Route path='/search' element={<SearchPage />}/>
+                    <Route path='/movie/:movieid' element = {<MovieDetail/>}/>
+                    <Route path='/movie/:movieid/shows' element={<TheatresShowsPage />} />
+                    <Route path='/booking/:showId' element = {<Booking/>}/>
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 export default App;

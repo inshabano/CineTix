@@ -4,14 +4,12 @@ const userRoutes = require("./routes/user.routes");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const movieRoutes = require("./routes/movie.routes");
-const bookingRoutes = require("./routes/booking.routes");
 const theatreRoutes = require("./routes/theatre.routes");
 const showRoutes = require("./routes/show.routes")
 require('dotenv').config();
 
 const app = express();
 
-// Connect to MongoDB
 connectDB();
 
 app.use(cors({
@@ -23,7 +21,6 @@ app.use(bodyParser.json());
 
 userRoutes(app);
 movieRoutes(app);
-bookingRoutes(app);
 theatreRoutes(app);
 showRoutes(app);
 const port = process.env.PORT || 5000;

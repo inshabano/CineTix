@@ -1,0 +1,239 @@
+.loaderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #ef424a;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+.loaderText {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.bookingContainer {
+    margin-top: 40px;
+    padding: 20px;
+    max-width: 960px;
+    
+    
+}
+.cardContainer{
+    width: 95vw;
+    text-align: left;
+}
+
+.showdetails{
+    margin-right: 50px;
+    font-size: medium;
+    font-weight: 700;
+}
+.screenDisplayArea {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.movieScreenVisual {
+    width: 80%;
+    max-width: 600px;
+    height: 40px;
+    background-color: #333;
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.seatsGridWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    border: 1px solid #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.seatRowContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rowLabelText {
+    width: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.seatUnit {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    border: 1px solid #ccc;
+    flex-shrink: 0;
+}
+
+.seatUnit:hover {
+    transform: scale(1.05);
+}
+
+.available {
+    background-color: #e6ffe6;
+    border-color: #66cc66;
+    color: #333;
+}
+
+.selectedSeat {
+    background-color: #4CAF50;
+    border-color: #388E3C;
+    color: white;
+}
+
+.booked {
+    background-color: #ffcccc;
+    border-color: #ff6666;
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.booked:hover {
+    transform: none;
+}
+
+.seatStatusLegend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+.legendItemEntry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.legendItemEntry .seatUnit {
+    width: 20px;
+    height: 20px;
+    cursor: default;
+    border-width: 1px;
+}
+.legendItemEntry .seatUnit:hover {
+    transform: none;
+}
+
+.chosenSeatsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.selectedSeatBadge {
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+}
+
+.bookingdetails{
+    width: 100vw;
+    text-align: left;
+}
+.bookTicketsButton {
+    width: 20%;
+    margin-top: 20px;
+    background-color: #ef424a !important;
+    border-color: #ef424a !important;
+}
+
+.bookTicketsButton:hover {
+    background-color: #d9363d !important;
+    border-color: #d9363d !important;
+}
+
+@media (max-width: 768px) {
+    .bookingContainer {
+        padding: 10px;
+        margin: 10px auto;
+    }
+    .cardTitleContent h1 {
+        font-size: 1.5em;
+    }
+    .cardTitleContent p {
+        font-size: 0.9em;
+    }
+    .movieScreenVisual {
+        width: 90%;
+        height: 40px;
+    }
+    .seatUnit {
+        width: 25px;
+        height: 25px;
+        font-size: 0.7em;
+    }
+    .rowLabelText {
+        width: 20px;
+        font-size: 0.8em;
+    }
+    .seatsGridWrapper {
+        gap: 3px;
+    }
+    .seatRowContainer {
+        gap: 3px;
+    }
+    .seatStatusLegend {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}
