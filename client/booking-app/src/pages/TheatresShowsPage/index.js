@@ -5,8 +5,7 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { getTheatresAndShowtimes } from '../../services/shows';
 import { getMovieData } from '../../services/movies';
-
-
+import Loader from '../../components/Loader';
 
 const getLocalFormattedDateString = (date) => {
     const year = date.getFullYear();
@@ -19,18 +18,18 @@ const TheatresShowsPage = () => {
     const { movieid } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
 
-   const [selectedDate, setSelectedDate] = useState(() => {
-    const dateParam = searchParams.get('date');
-    let initialDate;
-    if (dateParam) {
-        const parts = dateParam.split('-');
-        initialDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    } else {
-        initialDate = new Date();
-    }
-    initialDate.setHours(0, 0, 0, 0);
-    return initialDate;
-});
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const dateParam = searchParams.get('date');
+        let initialDate;
+        if (dateParam) {
+            const parts = dateParam.split('-');
+            initialDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        } else {
+            initialDate = new Date();
+        }
+        initialDate.setHours(0, 0, 0, 0);
+        return initialDate;
+    });
 
     const [theatres, setTheatres] = useState([]);
     const [movieDetails, setMovieDetails] = useState(null);
@@ -52,8 +51,7 @@ const TheatresShowsPage = () => {
                 } else {
                     console.error("Failed to fetch movie details:", movieResponse);
                     setError(movieResponse?.message || "Failed to load movie details.");
-                    setIsLoading(false);
-                    return;
+                    // Do not return here, allow showsResponse to try fetching
                 }
 
                 const showsResponse = await getTheatresAndShowtimes(movieid, formattedDate);
@@ -68,46 +66,25 @@ const TheatresShowsPage = () => {
                 setError("An error occurred while fetching data. Please try again.");
                 setTheatres([]);
             } finally {
-                setIsLoading(false);
+                // Introduce a minimum loading time for the loader
+                const minLoaderTime = 500;
+                const startTime = Date.now();
+
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = minLoaderTime - elapsedTime;
+
+                if (remainingTime > 0) {
+                    setTimeout(() => {
+                        setIsLoading(false);
+                    }, remainingTime);
+                } else {
+                    setIsLoading(false);
+                }
             }
         };
 
         fetchData();
-    }, [movieid, selectedDate]);
-    useEffect(() => {
-    const fetchData = async () => {
-        setIsLoading(true);
-        setError(null);
-
-        const formattedDate = getLocalFormattedDateString(selectedDate);
-
-        try {
-            const movieResponse = await getMovieData(movieid);
-            if (movieResponse && movieResponse.success) {
-                setMovieDetails(movieResponse.data);
-            } else {
-                setError(movieResponse?.message || "Failed to load movie details.");
-                setIsLoading(false);
-                return;
-            }
-
-            const showsResponse = await getTheatresAndShowtimes(movieid, formattedDate);
-            if (showsResponse && showsResponse.success) {
-                setTheatres(showsResponse.data);
-            } else {
-                setError(showsResponse?.message || "Failed to load theatres and showtimes.");
-                setTheatres([]);
-            }
-        } catch (err) {
-            setError("An error occurred while fetching data. Please try again.");
-            setTheatres([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    fetchData();
-}, [movieid, selectedDate, location.search]);
+    }, [movieid, selectedDate, location.search]);
 
 
     const getCalendarDates = () => {
@@ -131,13 +108,7 @@ const TheatresShowsPage = () => {
     };
 
     if (isLoading) {
-        return (
-            <>
-                <Navbar />
-                <div className={styles.loadingMessage}>Loading available shows...</div>
-                <Footer />
-            </>
-        );
+        return <Loader />; // Use the Loader component
     }
 
     if (error) {
@@ -222,14 +193,14 @@ const TheatresShowsPage = () => {
                                             .map(showtime => (
                                                 <Link
                                                     to={`/booking/${showtime.showId}`}
-                                                    key={showtime.showId} 
+                                                    key={showtime.showId}
                                                     className={styles.showtimeBtn}
                                                 >
-                                                   
+
                                                     {showtime.time}
                                                     {showtime.type && <span className={styles.showtimeType}>{showtime.type}</span>}
                                                 </Link>
-                                                 
+
                                             ))
                                     ) : (
                                         <p className={styles.noShowtimesForTheatre}>No showtimes for this theatre on this date.</p>

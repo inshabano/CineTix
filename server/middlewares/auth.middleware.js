@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const verifyJWT = async (req, res, next) => {
     const token = req.headers['access-token'];
     if (!token) {
-        return res.status(400).send({ success: false, message: "JWT token is not passed" });
+        return res.status(400).send({ success: false, message: "Please Login to access this page" });
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, payload) => {

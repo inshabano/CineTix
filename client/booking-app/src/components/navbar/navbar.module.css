@@ -353,8 +353,7 @@
 }
 
 .search-cont {
-    position: relative; /* Important for absolute positioning of suggestions */
-    /* ... existing styles ... */
+    position: relative; 
 }
 
 .suggestions-list {

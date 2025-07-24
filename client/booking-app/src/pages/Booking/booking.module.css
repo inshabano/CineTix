@@ -1,43 +1,7 @@
-.loaderContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
-    z-index: 1000;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #ef424a;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-}
-
-.loaderText {
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #555;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 .bookingContainer {
-    margin-top: 40px;
+    margin-top: 50px;
     padding: 20px;
-    max-width: 960px;
-    
-    
+    max-width: 900px;  
 }
 .cardContainer{
     width: 95vw;
@@ -193,7 +157,7 @@
 .bookTicketsButton {
     width: 20%;
     margin-top: 20px;
-    background-color: #ef424a !important;
+    background-color: #e7222c !important;
     border-color: #ef424a !important;
 }
 
@@ -205,7 +169,7 @@
 @media (max-width: 768px) {
     .bookingContainer {
         padding: 10px;
-        margin: 10px auto;
+        margin: 20px auto;
     }
     .cardTitleContent h1 {
         font-size: 1.5em;

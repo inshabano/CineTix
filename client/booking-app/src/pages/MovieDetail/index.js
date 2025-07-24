@@ -4,6 +4,7 @@ import styles from './movieDetail.module.css';
 import { getMovieData } from "../../services/movies";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
+import Loader from '../../components/Loader'; 
 
 const getLocalFormattedDateString = (date) => {
     const year = date.getFullYear();
@@ -13,13 +14,18 @@ const getLocalFormattedDateString = (date) => {
 };
 
 const MovieDetail = () => {
+    const [error, setError] = useState(null);
+    const [showInitialLoader, setShowInitialLoader] = useState(true);
     const [movie, setMovie] = useState(null);
     const { movieid } = useParams();
     const navigate = useNavigate();
     const [showCalendar, setShowCalendar] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchMovieDetails = async () => {
+            setLoading(true);
+            setError(null);
             try {
                 const response = await getMovieData(movieid);
                 if (response && response.data) {
@@ -27,10 +33,25 @@ const MovieDetail = () => {
                 } else {
                     console.error("Failed to fetch movie data:", response);
                     setMovie(null);
+                    setError(response.message || "Failed to fetch movie details.");
                 }
             } catch (error) {
                 console.error("Error fetching movie details:", error);
                 setMovie(null);
+                setError("An unexpected error occurred while fetching movie details.");
+            } finally {
+                const minLoaderTime = 500;
+                const startTime = Date.now();
+                setLoading(false);
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = minLoaderTime - elapsedTime;
+                if (remainingTime > 0) {
+                    setTimeout(() => {
+                        setShowInitialLoader(false);
+                    }, remainingTime);
+                } else {
+                    setShowInitialLoader(false);
+                }
             }
         };
 
@@ -54,11 +75,29 @@ const MovieDetail = () => {
         navigate(`/movie/${movieid}/shows?date=${formattedDate}`);
     };
 
+  
+    if (showInitialLoader) {
+        return <Loader />;
+    }
+    
+    
+    if (error) {
+        return (
+            <>
+                <Navbar />
+                <div className="ms-3 pt-3">
+                    <h2>Error: {error}</h2>
+                </div>
+                <Footer />
+            </>
+        );
+    }
+
     if (!movie) {
         return (
             <>
                 <Navbar />
-                <div className={styles.loadingMessage}>Loading movie details...</div>
+                <div className={styles.loadingMessage}>No movie details found.</div>
                 <Footer />
             </>
         );
@@ -74,7 +113,7 @@ const MovieDetail = () => {
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
 
     const selectableDates = getSelectableDates();
-
+    
     return (
         <div className={styles.container}>
             <Navbar />
