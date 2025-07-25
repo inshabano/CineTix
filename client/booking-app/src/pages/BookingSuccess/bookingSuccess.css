@@ -1,0 +1,66 @@
+
+
+.booking-success-container {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.booking-success-card {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+    padding: 30px !important;
+}
+
+.success-header {
+    color: #ef424a;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.welcome-message, .confirmation-message, .thank-you-message, .enjoy-message {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.highlight-username {
+    color: #ef424a;
+    font-weight: bold;
+}
+
+.highlight {
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.details-row {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: left;
+}
+
+.details-row p {
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.details-row strong {
+    color: #333;
+    min-width: 120px;
+    display: inline-block;
+}
+
+
+@media (max-width: 767px) {
+    .details-row .ant-col {
+        text-align: center;
+    }
+    .details-row strong {
+        min-width: auto;
+        display: block;
+    }
+}

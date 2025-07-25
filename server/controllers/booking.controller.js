@@ -4,73 +4,143 @@ const showModel = require('../models/show.model');
 const sendEmail = require('../utils/email');
 const bookingConfirmationTemplate = require('../templates/bookingConfirmationTemplate')
 
-const makePayment = async(req,res)=>{
-   
-}
+const getBookingById = async (req, res) => {
+    try {
+        const { bookingId } = req.params;
+        const userId = req.userDetails._id; 
 
+        const booking = await bookingModel.findById(bookingId)
+            .populate({
+                path: 'show',
+                populate: [
+                    { path: 'movie' },
+                    { path: 'theatre' }
+                ]
+            })
+            .populate('user'); 
+
+        if (!booking) {
+            return res.status(404).json({ success: false, message: 'Booking not found.' });
+        }
+
+        
+        if (booking.user._id.toString() !== userId.toString() && req.userDetails.userType !== 'admin') {
+            return res.status(403).json({ success: false, message: 'Unauthorized access to booking details.' });
+        }
+
+        res.status(200).json({ success: true, data: booking });
+
+    } catch (error) {
+        console.error('Error fetching booking by ID:', error);
+        res.status(500).json({ success: false, message: 'Internal server error fetching booking details.', error: error.message });
+    }
+};
 const createBooking = async(req,res) => {
-    const {seats, transactionId} = req.body;
-    const userId = req.userDetails._id;
-    const showDetails = req.showDetails;
+    
+    const { bookingId, razorpayPaymentId } = req.body; 
+    const userId = req.userDetails._id; 
 
     try {
-        const totalAmount = showDetails.ticketPrice * seats.length;
+        
+        const booking = await bookingModel.findById(bookingId);
+
+        if (!booking) {
+            return res.status(404).send({ success: false, message: "Initial booking record not found." });
+        }
+
+        
+        if (booking.user.toString() !== userId.toString()) {
+            return res.status(403).send({ success: false, message: "Unauthorized: Booking does not belong to this user." });
+        }
+
+        
+        if (booking.status !== 'payment_verified') { 
+            
+            return res.status(400).send({ success: false, message: `Booking status is '${booking.status}'. Cannot finalize. Payment may not be verified.` });
+        }
+
+        const showId = booking.show; 
+        const seatsToBook = booking.seats; 
+        const transactionId = razorpayPaymentId; 
+
+        const show = await showModel.findById(showId);
+        if (!show) {
+            booking.status = 'failed';
+            await booking.save();
+            return res.status(404).send({ success: false, message: "Associated show not found for booking confirmation." });
+        }
+        const alreadyBooked = seatsToBook.filter(seat => show.bookedSeats.includes(seat));
+        if (alreadyBooked.length > 0) {
+            booking.status = 'failed';
+            await booking.save(); 
+            return res.status(400).send({ success: false, message: `Seat ${alreadyBooked[0]} is already booked. Please try other seats.` });
+        }
 
         const session = await mongoose.startSession();
         session.startTransaction();
 
         try {
-            const newBooking = new bookingModel({
-                show: showDetails._id,
-                user: userId,
-                seats: seats,
-                transactionId: transactionId,
-                totalAmount: totalAmount,
-                status: 'confirmed'
-            });
-            console.log(totalAmount);
-
-            const newBookingResponse = await newBooking.save({ session });
-
             await showModel.findByIdAndUpdate(
-                showDetails._id,
+                show._id,
                 {
-                    $push: { bookedSeats: { $each: seats } },
-                    $inc: { availableSeats: -seats.length }
+                    $push: { bookedSeats: { $each: seatsToBook } },
+                    $inc: { availableSeats: -seatsToBook.length }
                 },
-                { session, new: true, runValidators: true }
+                { session, new: true, runValidators: true } 
             );
+
+            booking.status = 'confirmed';
+            booking.transactionId = transactionId; 
+            await booking.save({ session }); 
 
             await session.commitTransaction();
             session.endSession();
-            
-            const {subject,body: getHtmlBody} = bookingConfirmationTemplate(showDetails,newBookingResponse);
+
+            const populatedBooking = await bookingModel.findById(booking._id)
+                                        .populate({
+                                            path: 'show',
+                                            populate: {
+                                                path: 'movie theatre'
+                                            }
+                                        }).lean(); 
+
+            if (!populatedBooking || !populatedBooking.show || !populatedBooking.show.movie || !populatedBooking.show.theatre) {
+                console.warn("Could not fully populate booking for email. Sending with partial data.");
+            }
+
+            const {subject, body: getHtmlBody} = bookingConfirmationTemplate(populatedBooking.show, populatedBooking);
             sendEmail([req.userDetails.email],subject,getHtmlBody());
 
             return res.status(201).send({
-                success:true,
-                message:`Booking successfully created with ID ${newBookingResponse._id}`,
-                data:newBookingResponse
+                success: true,
+                message: `Booking successfully confirmed with ID ${booking._id}`,
+                data: populatedBooking 
             });
 
         } catch (transactionError) {
             await session.abortTransaction();
             session.endSession();
-            console.error('Booking transaction failed:', transactionError);
+            console.error('Booking finalization transaction failed:', transactionError);
+           
+            if (booking) {
+                booking.status = 'failed';
+                await booking.save(); 
+            }
             return res.status(500).send({
                 success: false,
-                message: 'Failed to create booking due to a transaction error. Please try again.',
+                message: 'Failed to confirm booking due to a transaction error. Please try again.',
                 error: transactionError.message
             });
         }
 
     } catch(err) {
-        console.error("Error in createBooking controller:", err);
-        return res.status(500).send({success:false, message:"Something went wrong.Please try again"})
+        console.error("Error in createBooking controller (outer catch):", err);
+        return res.status(500).send({success:false, message:"Something went wrong. Please try again", error: err.message})
     }
 }
 
+
 module.exports = {
-    makePayment,
+    getBookingById,
     createBooking,
 }

@@ -71,7 +71,8 @@ const createRazorpayOrder = async (req, res) => {
 
 const verifyPayment = async (req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
-
+     console.log('RAZORPAY_KEY_SECRET exists:', !!process.env.RAZORPAY_KEY_SECRET);
+    console.log('RAZORPAY_KEY_SECRET length:', process.env.RAZORPAY_KEY_SECRET?.length);
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !bookingId) {
         return res.status(400).send({ success: false, message: "Missing payment details." });
     }
@@ -80,6 +81,7 @@ const verifyPayment = async (req, res) => {
         const booking = await bookingModel.findById(bookingId);
 
         if (!booking || booking.razorpayOrderId !== razorpay_order_id) {
+            
             return res.status(400).send({ success: false, message: "Booking or Order ID mismatch." });
         }
 
@@ -88,52 +90,52 @@ const verifyPayment = async (req, res) => {
         const generated_signature = hmac.digest('hex');
 
         if (generated_signature === razorpay_signature) {
-            const session = await mongoose.startSession();
-            session.startTransaction();
-
-            try {
-                booking.status = 'confirmed';
-                booking.transactionId = razorpay_payment_id;
-                await booking.save({ session });
-
-                await showModel.findByIdAndUpdate(
-                    booking.show, 
-                    {
-                        $push: { bookedSeats: { $each: booking.seats } }, 
-                        $inc: { availableSeats: -booking.seats.length }
-                    },
-                    { session, new: true, runValidators: true }
-                );
-
-                await session.commitTransaction();
-                session.endSession();
+            
+            
+            
+            if (booking.status === 'pending') { 
+                booking.status = 'payment_verified';
+                booking.transactionId = razorpay_payment_id; 
+                await booking.save();
 
                 return res.status(200).send({
                     success: true,
-                    message: "Payment verified successfully!",
+                    message: "Payment verified successfully! Proceeding to finalize booking.",
+                    bookingId: booking._id, 
+                    razorpayPaymentId: razorpay_payment_id 
+                });
+            } else {
+                
+                
+                
+                return res.status(200).send({
+                    success: true,
+                    message: `Payment already handled, booking status is '${booking.status}'.`,
                     bookingId: booking._id,
                     razorpayPaymentId: razorpay_payment_id
-                });
-
-            } catch (transactionError) {
-                await session.abortTransaction();
-                session.endSession();
-                console.error('Payment verification transaction failed:', transactionError);
-                return res.status(500).send({
-                    success: false,
-                    message: 'Payment verification failed due to a transaction error. Please contact support.',
-                    error: transactionError.message
                 });
             }
 
         } else {
-            booking.status = 'failed'; 
-            await booking.save();
+            
+            if (booking.status === 'pending') { 
+                booking.status = 'failed';
+                await booking.save();
+            }
             return res.status(400).send({ success: false, message: "Payment verification failed (signature mismatch)." });
         }
 
     } catch (error) {
         console.error("Error verifying payment:", error);
+        try {
+            const failedBooking = await bookingModel.findById(bookingId);
+            if (failedBooking && failedBooking.status === 'pending') {
+                failedBooking.status = 'failed';
+                await failedBooking.save();
+            }
+        } catch (updateErr) {
+            console.error("Failed to update booking status to failed during verification error:", updateErr);
+        }
         return res.status(500).send({ success: false, message: "Error processing payment verification", error: error.message });
     }
 };

@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; 
 import { useEffect, useState, useCallback } from "react";
 import { getShowDetails } from "../../services/shows";
-import { createRazorpayOrder, verifyRazorpayPayment } from "../../services/payment";
+import { createRazorpayOrder, verifyRazorpayPayment,createFinalBooking } from "../../services/payment"; 
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import styles from './booking.module.css';
-import { Card, Row, Col, Button, message, Spin } from 'antd';
+import { Card, Row, Col, Button, message, Spin, Alert } from 'antd'; 
 import Loader from '../../components/Loader';
 
 const RAZORPAY_KEY_ID = 'rzp_test_nmWcpPrF78hHbO';
@@ -13,6 +13,8 @@ const RAZORPAY_KEY_ID = 'rzp_test_nmWcpPrF78hHbO';
 function Booking() {
     const params = useParams();
     const showId = params.showId;
+    const navigate = useNavigate();
+    
     const [showDetails, setShowDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -126,13 +128,13 @@ function Booking() {
 
         try {
             const orderResponse = await createRazorpayOrder(showDetails._id, seatIdsToBook);
-            
+
             if (!orderResponse.success) {
                 message.error({ content: orderResponse.message || 'Failed to create payment order.', key: 'payment_init', duration: 3 });
                 throw new Error(orderResponse.message || 'Failed to create order');
             }
 
-            const { orderId, amount, currency, bookingId } = orderResponse.data;
+            const { orderId, amount, currency, bookingId: tempBookingId } = orderResponse.data;
 
             const options = {
                 key: RAZORPAY_KEY_ID,
@@ -148,14 +150,30 @@ function Booking() {
                         razorpay_order_id: response.razorpay_order_id,
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
-                        bookingId: bookingId
+                        bookingId:tempBookingId
                     });
 
                     if (verifyData.success) {
-                        message.success({ content: 'Payment successful! Booking confirmed.', key: 'payment_verify', duration: 3 });
-                        setTimeout(() => {
-                            window.location.href = `/booking-success/${bookingId}`;
-                        }, 1000);
+                        message.success({ content: 'Payment verification successful. Confirming booking...', key: 'payment_verify', duration: 2 });
+
+                        
+                        const finalBookingResponse = await createFinalBooking(
+                            verifyData.bookingId,
+                            verifyData.razorpayPaymentId
+                        );
+
+                        if (finalBookingResponse.success) {
+                            message.success({ content: 'Booking confirmed! Email sent.', key: 'payment_verify', duration: 3 });
+                            setTimeout(() => {
+                                
+                                navigate(`/booking-success/${finalBookingResponse.data._id}`);
+                            }, 1000);
+                        } else {
+                            
+                            message.error({ content: finalBookingResponse.message || 'Failed to finalize booking.', key: 'payment_verify', duration: 5 });
+                            console.error('Final booking creation failed:', finalBookingResponse);
+                        }
+
                     } else {
                         message.error({ content: verifyData.message || 'Payment verification failed.', key: 'payment_verify', duration: 5 });
                         console.error('Verification failed:', verifyData);
@@ -194,7 +212,13 @@ function Booking() {
             <>
                 <Navbar />
                 <div className="ms-3 pt-3">
-                    <h2>Error: {error}</h2>
+                    {/* Using Ant Design Alert for better error presentation */}
+                    <Alert
+                        message="Error Loading Booking Details"
+                        description={error}
+                        type="error"
+                        showIcon
+                    />
                 </div>
                 <Footer />
             </>
@@ -203,11 +227,16 @@ function Booking() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             {
                 !showDetails && !loading ? (
                     <div className="ms-3 pt-3">
-                        <h2>No show details found or loaded.</h2>
+                        <Alert
+                            message="No Show Details Found"
+                            description="Could not load show details for this booking. Please try again later."
+                            type="warning"
+                            showIcon
+                        />
                     </div>
                 ) : null
             }
@@ -249,11 +278,11 @@ function Booking() {
                                             <div key={rowIndex} className={styles.seatRowContainer}>
                                                 <div className={styles.rowLabelText}>{seatRow[0].row}</div>
                                                 {seatRow.map(seat => {
-                                                    const isSeatSelected = selectedSeats.some(s => s.id === seat.id);
+                                                    const isCurrentlySelected = selectedSeats.some(s => s.id === seat.id); 
                                                     return (
                                                         <div
                                                             key={seat.id}
-                                                            className={`${styles.seatUnit} ${styles[seat.status]} ${isSeatSelected ? styles.selectedSeat : ''}`}
+                                                            className={`${styles.seatUnit} ${styles[seat.status]} ${isCurrentlySelected ? styles.selectedSeat : ''}`}
                                                             onClick={() => handleSeatSelection(seat)}
                                                         >
                                                             {seat.column}
@@ -302,7 +331,7 @@ function Booking() {
                     </div>
                 )
             }
-            <Footer />
+            <Footer/>
         </div>
     );
 }

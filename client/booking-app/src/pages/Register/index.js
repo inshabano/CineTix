@@ -1,25 +1,26 @@
 import { Button, Form, Input, message } from "antd";
-import { Link, Navigate, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; // Use react-router-dom for Link and useNavigate
 
 import "./index.css";
 import { RegisterUser } from "../../services/auth";
 
-
 const Register = () => {
   const navigate = useNavigate();
+
   const onRegister = async (values) => {
     console.log(values);
-    const {username,email,password} = values;
+    const { username, email, password } = values;
     const input = {
-      username, email,password
-    }
+      username,
+      email,
+      password,
+    };
     const response = await RegisterUser(input);
     console.log(response);
-    if(response.success){
+    if (response.success) {
       message.success(response.message);
       navigate("/login");
-    }
-    else{
+    } else {
       message.error(response.message);
     }
   };
@@ -37,6 +38,7 @@ const Register = () => {
           rules={[
             {
               required: true,
+              message: "Please input your username!", // Added custom message
             },
           ]}
           labelCol={{
@@ -54,6 +56,11 @@ const Register = () => {
           rules={[
             {
               required: true,
+              message: "Please input your email!",
+            },
+            {
+              type: "email", 
+              message: "The input is not a valid E-mail!", 
             },
           ]}
           labelCol={{
@@ -71,6 +78,11 @@ const Register = () => {
           rules={[
             {
               required: true,
+              message: "Please input your password!", // Added custom message
+            },
+            {
+              min: 6, 
+              message: "Password must be at least 6 characters long!",
             },
           ]}
           labelCol={{
@@ -98,4 +110,5 @@ const Register = () => {
     </div>
   );
 };
+
 export default Register;
