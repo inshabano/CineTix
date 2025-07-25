@@ -1,11 +1,9 @@
 module.exports = (showDetails, bookingDetails) => {
-    // Ensure showDetails.movie and showDetails.theatre are populated
     const movieName = showDetails.movie.movieName;
     const movieLanguage = showDetails.movie.language;
     const theatreName = showDetails.theatre.name;
     const theatreAddress = showDetails.theatre.address;
 
-    // Subject of the email
     const subject = `Booking Confirmed for ${movieName} (${movieLanguage}) - ${bookingDetails.seats.length} Tickets`;
 
     const body = () => {

@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Spin, Alert, Row, Col } from 'antd';
-import Navbar from '../../components/navbar';
-import Footer from '../../components/footer';
 import Loader from '../../components/Loader';
 import { getBookingDetailsById } from '../../services/booking'; 
 import './bookingSuccess.css'; 
@@ -55,7 +53,6 @@ function BookingSuccessPage() {
     if (error) {
         return (
             <>
-                <Navbar />
                 <div className="booking-success-container">
                     <Alert
                         message="Error"
@@ -64,7 +61,6 @@ function BookingSuccessPage() {
                         showIcon
                     />
                 </div>
-                <Footer />
             </>
         );
     }
@@ -72,7 +68,6 @@ function BookingSuccessPage() {
     if (!bookingDetails) {
         return (
             <>
-                <Navbar />
                 <div className="booking-success-container">
                     <Alert
                         message="Booking Not Found"
@@ -81,7 +76,6 @@ function BookingSuccessPage() {
                         showIcon
                     />
                 </div>
-                <Footer />
             </>
         );
     }
@@ -96,7 +90,6 @@ function BookingSuccessPage() {
 
     return (
         <div>
-            <Navbar />
             <div className="booking-success-container">
                 <Card
                     title={<h1 className="success-header">🎉 Booking Confirmed!</h1>}
@@ -125,7 +118,6 @@ function BookingSuccessPage() {
                     <p className="enjoy-message">Enjoy the movie!</p>
                 </Card>
             </div>
-            <Footer />
         </div>
     );
 }

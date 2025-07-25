@@ -1,5 +1,7 @@
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Navbar from './components/navbar';
+import Footer from './components/footer';
 import Home from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +16,9 @@ function App() {
     return (
         <div className='App'>
             <BrowserRouter>
+             <div className="AppLayout">
+                 <Navbar />
+                  <main className="AppContent"> 
                 <Routes>
                     <Route path='/' element={<Home/>}/>
                     <Route path='/login' element={<Login/>}/>
@@ -24,6 +29,9 @@ function App() {
                     <Route path='/booking/:showId' element = {<Booking/>}/>
                     <Route path="/booking-success/:bookingId" element={<BookingSuccessPage />} />
                 </Routes>
+                </main>
+                <Footer /> {/* Footer is at the bottom */}
+                 </div>
             </BrowserRouter>
         </div>
     );

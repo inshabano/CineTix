@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import Navbar from "..//../components/navbar";
 import {Flex} from "antd";
 import { getAllMovies } from '../../services/movies';
 import { Link } from 'react-router-dom';
 import './index.css'
 import Banner from '../../components/banner';
-import Footer from '../../components/footer';
 import Loader from '../../components/Loader';
 
 const Home = () => {
@@ -62,19 +60,16 @@ const Home = () => {
     if (error) {
         return (
             <>
-                <Navbar />
                 <div className="main-content-area" style={{ textAlign: 'center', padding: '50px' }}>
                     <h2>Error: {error}</h2>
                     <p>Please try again later.</p>
                 </div>
-                <Footer />
             </>
         );
     }
 
     return(
         <div>
-            <Navbar/>
             <Banner/>
             
             <div className="main-content-area">
@@ -97,7 +92,6 @@ const Home = () => {
                     }
                 </Flex>
             </div>
-            <Footer/>
         </div>
     )
 }

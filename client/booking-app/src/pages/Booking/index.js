@@ -2,8 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import { getShowDetails } from "../../services/shows";
 import { createRazorpayOrder, verifyRazorpayPayment,createFinalBooking } from "../../services/payment"; 
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
 import styles from './booking.module.css';
 import { Card, Row, Col, Button, message, Spin, Alert } from 'antd'; 
 import Loader from '../../components/Loader';
@@ -210,7 +208,6 @@ function Booking() {
     if (error) {
         return (
             <>
-                <Navbar />
                 <div className="ms-3 pt-3">
                     {/* Using Ant Design Alert for better error presentation */}
                     <Alert
@@ -220,14 +217,12 @@ function Booking() {
                         showIcon
                     />
                 </div>
-                <Footer />
             </>
         );
     }
 
     return (
         <div>
-            <Navbar/>
             {
                 !showDetails && !loading ? (
                     <div className="ms-3 pt-3">
@@ -331,7 +326,6 @@ function Booking() {
                     </div>
                 )
             }
-            <Footer/>
         </div>
     );
 }

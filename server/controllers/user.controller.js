@@ -1,5 +1,6 @@
 const { userModel } = require("../models/user.model");
 var jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const onRegister = async (req, res)=>{
     console.log("📥 Incoming request body:", req.body);
@@ -12,7 +13,15 @@ const onRegister = async (req, res)=>{
         if(existingUser){
             return res.status(400).send({success:false, message: "User with this email already exists!"});
         }
-        const newUser = new userModel(req.body);
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const newUser = new userModel({
+            username: username,
+            email: email,
+            password: hashedPassword,
+            role: 'user'
+        });
+
         await newUser.save();
         return res.status(201).send({success:true, message:"Registration completed! Please login"})
 
@@ -31,9 +40,11 @@ const onLogin = async(req,res)=>{
         if(!existingUser){
             return res.status(400).send({success:false, message:"User with this email does not exists!"})
         }
-        if(password !== existingUser.password){
-            return res.status(400).send({success:false, message:"Oops! Please enter correct password"})
+        const isMatch = await bcrypt.compare(password, existingUser.password);
+        if (!isMatch) {
+            return res.status(400).send({ success: false, message: "Oops! Please enter correct password." });
         }
+
         const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY);
         return res.status(201).send({
             success:true, 

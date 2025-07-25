@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import Navbar from '../../components/navbar';
 import { Flex } from 'antd';
 import { searchMovies } from '../../services/movies';
 import styles from './search.module.css';
-import Footer from '../../components/footer';
 import Loader from '../../components/Loader';
 
 const SearchPage = () => {
@@ -62,7 +60,6 @@ const SearchPage = () => {
 
     return (
         <div>
-            <Navbar />
             <div className={styles['main-content-area']}>
                 <h1 className={styles['search-heading']}>Search Results for: "{searchQuery}"</h1>
 
@@ -103,7 +100,6 @@ const SearchPage = () => {
                     </Flex>
                 )}
             </div>
-            <Footer/>
         </div>
     );
 };

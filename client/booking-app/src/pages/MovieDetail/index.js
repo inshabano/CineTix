@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './movieDetail.module.css';
 import { getMovieData } from "../../services/movies";
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
 import Loader from '../../components/Loader'; 
 
 const getLocalFormattedDateString = (date) => {
@@ -84,11 +82,9 @@ const MovieDetail = () => {
     if (error) {
         return (
             <>
-                <Navbar />
                 <div className="ms-3 pt-3">
                     <h2>Error: {error}</h2>
                 </div>
-                <Footer />
             </>
         );
     }
@@ -96,9 +92,7 @@ const MovieDetail = () => {
     if (!movie) {
         return (
             <>
-                <Navbar />
                 <div className={styles.loadingMessage}>No movie details found.</div>
-                <Footer />
             </>
         );
     }
@@ -116,7 +110,6 @@ const MovieDetail = () => {
     
     return (
         <div className={styles.container}>
-            <Navbar />
 
             <div
                 className={styles.posterDetailsBackground}
@@ -231,7 +224,6 @@ const MovieDetail = () => {
                     )}
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };

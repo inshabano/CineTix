@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useLocation, Link } from 'react-router-dom';
 import styles from './TheatresShowsPage.module.css';
-import Navbar from '../../components/navbar';
-import Footer from '../../components/footer';
 import { getTheatresAndShowtimes } from '../../services/shows';
 import { getMovieData } from '../../services/movies';
 import Loader from '../../components/Loader';
@@ -51,7 +49,6 @@ const TheatresShowsPage = () => {
                 } else {
                     console.error("Failed to fetch movie details:", movieResponse);
                     setError(movieResponse?.message || "Failed to load movie details.");
-                    // Do not return here, allow showsResponse to try fetching
                 }
 
                 const showsResponse = await getTheatresAndShowtimes(movieid, formattedDate);
@@ -66,7 +63,6 @@ const TheatresShowsPage = () => {
                 setError("An error occurred while fetching data. Please try again.");
                 setTheatres([]);
             } finally {
-                // Introduce a minimum loading time for the loader
                 const minLoaderTime = 500;
                 const startTime = Date.now();
 
@@ -108,15 +104,13 @@ const TheatresShowsPage = () => {
     };
 
     if (isLoading) {
-        return <Loader />; // Use the Loader component
+        return <Loader />;
     }
 
     if (error) {
         return (
             <>
-                <Navbar />
                 <div className={styles.errorMessage}>Error: {error}</div>
-                <Footer />
             </>
         );
     }
@@ -125,7 +119,6 @@ const TheatresShowsPage = () => {
 
     return (
         <div className={styles.container}>
-            <Navbar />
 
             <div className={styles.movieHeader}>
                 <h1>
@@ -212,7 +205,6 @@ const TheatresShowsPage = () => {
                 )}
             </div>
 
-            <Footer />
         </div>
     );
 };
