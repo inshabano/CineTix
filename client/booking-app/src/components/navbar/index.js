@@ -136,7 +136,7 @@ useEffect(() => {
             <div className={styles['nav-content']}>
                 <div className={styles.logo} onClick={navigateHome}>
                     <img src="https://cdn.pixabay.com/photo/2022/07/17/19/22/movie-7328179_1280.png" alt="Logo" className={styles['logo-img']} />
-                    <span className={styles['logo-text']}>MovieBooking</span>
+                    <span className={styles['logo-text']}>CineTix</span>
                 </div>
 
                 <div className={styles['search-cont']} ref={searchInputRef}>
@@ -183,11 +183,11 @@ useEffect(() => {
                                     <li onClick={() => { setIsUserDropdownOpen(false); navigate('/profile'); }}>
                                         <UserOutlined /> My Profile
                                     </li>
-                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/bookings'); }}>
+                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/mybookings'); }}>
                                         <BookOutlined /> My Bookings
                                     </li>
-                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/wishlist'); }}>
-                                        <HeartOutlined /> Wishlist
+                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/my-watchlist'); }}>
+                                        <HeartOutlined /> Watchlist
                                     </li>
                                     <li className={styles['menu-divider']}></li>
                                     <li onClick={handleLogoutClick} className={styles['logout-item']}>
@@ -227,7 +227,7 @@ useEffect(() => {
                             <li onClick={() => { onCloseDrawer(); navigate('/profile'); }}>
                                 <UserOutlined /> My Profile
                             </li>
-                            <li onClick={() => { onCloseDrawer(); navigate('/bookings'); }}>
+                            <li onClick={() => { onCloseDrawer(); navigate('/mybookings'); }}>
                                 <BookOutlined /> My Bookings
                             </li>
                             <li onClick={() => { onCloseDrawer(); navigate('/wishlist'); }}>

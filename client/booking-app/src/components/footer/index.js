@@ -8,7 +8,7 @@ const Footer = () => {
       <div className={styles.footerContainer}>
         
         <div className={styles.footerSection}>
-          <h3>🎬 MovieBooking</h3>
+          <h3>🎬 CineTix</h3>
           <p>Your one-stop destination for booking your favorite movies online.</p>
         </div>
 
@@ -32,7 +32,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.bottomBar}>
-        <p>&copy; {new Date().getFullYear()} MovieBooking. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} CineTix. All rights reserved.</p>
       </div>
     </footer>
   );

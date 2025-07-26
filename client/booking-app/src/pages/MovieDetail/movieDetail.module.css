@@ -364,8 +364,94 @@
     color: #dc3545;
 }
 
+.titleAndWatchlist {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.details h2 {
+   
+    font-size: 45px;
+    color: #111;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    margin-bottom: 0;
+    line-height: 1.2; 
+}
+
+
+.watchlistHeartButton {
+   
+    width: 40px;  
+    height: 36px; 
+    
+    border-radius: 50%;
+    background: rgb(3, 23, 61) !important;
+    border: 2px solid rgb(2, 2, 50) !important;
+    cursor: pointer;
+    transition: background 0.5s ease; 
+    position: relative;
+    align-items: center;
+    display: flex; 
+    justify-content: center;
+    margin-top: 30px;
+    flex-shrink: 0;
+
+   
+    transform: translateY(2px);
+   
+
+   
+    &::before,
+    &::after {
+        transition: background 0.5s ease;
+        position: absolute;
+        content: "";
+        
+       
+        width: 15px;
+        height: 24px;
+        top: 8px;     
+
+        border-radius: 15px 15px 0 0;
+    }
+
+    &::before {
+        left: 20px;
+        background: rgb(252, 250, 252) !important;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+    }
+
+    &::after {
+        left: 5px;
+        background: rgb(252, 250, 252) !important;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+    }
+}
+
+
+.activeHeart {
+    &.watchlistHeartButton::before,
+    &.watchlistHeartButton::after {
+        background: #ef424a  !important;
+    }
+}
+
+
+.watchlistHeartButton:disabled {
+    pointer-events: none;
+    opacity: 0.2 !important; 
+    cursor: default;
+}
+
+
 
 @media (max-width: 992px) {
+
     .posterDetailsOverlay {
         flex-direction: column;
         align-items: center;
@@ -385,7 +471,6 @@
     .details p {
         font-size: 18px;
     }
-
     .bookButton {
         width: 200px;
         padding: 15px;
@@ -400,9 +485,11 @@
     .calendarBox h3 {
         font-size: 1.5em;
     }
+
 }
 
 @media (max-width: 768px) {
+
     .container {
         padding: 20px;
     }
@@ -418,9 +505,13 @@
     .peopleSection {
         padding: 15px;
     }
+
 }
 
+
+
 @media (max-width: 576px) {
+
     .details h2 {
         font-size: 30px;
     }
@@ -434,7 +525,7 @@
     }
 
     .calendarBox {
-        max-width: 95%; 
+        max-width: 95%;
         padding: 15px;
     }
 
@@ -445,6 +536,7 @@
     .daysGrid .day {
         padding: 8px 0;
         font-size: 1em;
+
     }
 
     .calendarBox h3 {
@@ -458,5 +550,24 @@
     .calendarFooter button {
         font-size: 0.9em;
         padding: 8px 12px;
+
     }
+
+     .watchlistHeartButton {
+        width: 25px;
+        height: 22px;
+        transform: translateY(1px);
+    }
+    .watchlistHeartButton::before,
+    .watchlistHeartButton::after {
+        width: 12.5px;
+        height: 20px;
+        left: 12.5px;
+    }
+    .watchlistHeartButton::after {
+        left: 0;
+    }
+
 }
+
+

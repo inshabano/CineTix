@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './movieDetail.module.css';
 import { getMovieData } from "../../services/movies";
+import { addMovieToWatchlist, removeMovieFromWatchlist, getWatchlist } from "../../services/watchlist";
 import Loader from '../../components/Loader'; 
+import mojs from '@mojs/core';
+import $ from 'jquery';
 
 const getLocalFormattedDateString = (date) => {
     const year = date.getFullYear();
@@ -19,6 +22,11 @@ const MovieDetail = () => {
     const navigate = useNavigate();
     const [showCalendar, setShowCalendar] = useState(false);
     const [loading, setLoading] = useState(true);
+     const [isInWatchlist, setIsInWatchlist] = useState(false);
+    const [watchlistLoading, setWatchlistLoading] = useState(false);
+    const heartButtonRef = useRef(null);
+    const mojsTimelineRef = useRef(null);
+
 
     useEffect(() => {
         const fetchMovieDetails = async () => {
@@ -55,6 +63,107 @@ const MovieDetail = () => {
 
         fetchMovieDetails();
     }, [movieid]);
+
+   useEffect(() => {
+        if (heartButtonRef.current && mojs) { 
+            const el = heartButtonRef.current;
+
+            
+            if (!mojsTimelineRef.current) {
+                const scaleCurve = mojs.easing.path('M0,100 L25,99.9999983 C26.2328835,75.0708847 19.7847843,0 100,0');
+
+                const tween1 = new mojs.Burst({
+                    parent: el,
+                    radius: { 0: 100 },
+                    angle: { 0: 45 },
+                    y: -10,
+                    count: 10,
+                    children: {
+                        shape: 'circle',
+                        radius: 30,
+                        fill: ['red', 'white'],
+                        strokeWidth: 15,
+                        duration: 500,
+                    }
+                });
+
+                const tween2 = new mojs.Tween({
+                    duration: 900,
+                    onUpdate: function(progress) {
+                        const scaleProgress = scaleCurve(progress);
+                        el.style.WebkitTransform = el.style.transform = 'scale3d(' + scaleProgress + ',' + scaleProgress + ',1)';
+                    }
+                });
+                
+                const tween3 = new mojs.Burst({
+                    parent: el,
+                    radius: { 0: 100 },
+                    angle: { 0: -45 },
+                    y: -10,
+                    count: 10,
+                    children: {
+                        shape: 'circle',
+                        radius: 30,
+                        fill: ['white', 'red'],
+                        strokeWidth: 15,
+                        duration: 400,
+                    }
+                });
+
+                const timeline = new mojs.Timeline();
+                timeline.add(tween1, tween2, tween3);
+                mojsTimelineRef.current = timeline; 
+            }
+
+            
+            if (isInWatchlist) {
+                el.classList.add(styles.activeHeart); 
+            } else {
+                el.classList.remove(styles.activeHeart);
+            }
+
+            
+            return () => {
+                
+                
+            };
+        }
+    }, [isInWatchlist, movieid]); 
+
+    const handleWatchlistToggle = async () => {
+        if (!movieid) return;
+
+        setWatchlistLoading(true);
+        try {
+            let response;
+            if (isInWatchlist) {
+                response = await removeMovieFromWatchlist(movieid);
+            } else {
+                response = await addMovieToWatchlist(movieid);
+            }
+
+            if (response.success) {
+                setIsInWatchlist(!isInWatchlist); 
+                
+                if (!isInWatchlist && mojsTimelineRef.current) {
+                    mojsTimelineRef.current.replay(); 
+                }
+            } else {
+                if (response.message === "User not authenticated.") {
+                    alert("Please log in to add movies to your watchlist.");
+                    navigate('/login');
+                } else {
+                    alert(response.message || "Failed to update watchlist.");
+                }
+            }
+        } catch (err) {
+            console.error("Watchlist operation failed:", err);
+            alert("An error occurred. Please try again.");
+        } finally {
+            setWatchlistLoading(false);
+        }
+    };
+
 
     const getSelectableDates = () => {
         const dates = [];
@@ -119,7 +228,19 @@ const MovieDetail = () => {
                     <img src={movie.poster} alt={movie.movieName} className={styles.poster} />
 
                     <div className={styles.details}>
-                        <h2>{movie.movieName}</h2>
+                       <div className={styles.titleAndWatchlist}>
+                            <h2>{movie.movieName}</h2>
+                            {/* The heart button element */}
+                            <div 
+                                id="heart" 
+                                ref={heartButtonRef} 
+                                className={`${styles.watchlistHeartButton} ${isInWatchlist ? styles.activeHeart : ''}`} 
+                                onClick={handleWatchlistToggle}
+                                disabled={watchlistLoading} 
+                                title={isInWatchlist ? "Remove from Watchlist" : "Add to Watchlist"}
+                            >
+                            </div>
+                        </div>
                         <p><strong>Duration:</strong> {movie.duration}</p>
                         <p><strong>Genre:</strong> {Array.isArray(movie.genre) ? movie.genre.join(', ') : movie.genre}</p>
                         <p><strong>Language:</strong> {movie.language}</p>
