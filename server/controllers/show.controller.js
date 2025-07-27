@@ -3,6 +3,74 @@ const movieModel = require("../models/movie.model");
 const showModel = require("../models/show.model");
 const theatreModel = require("../models/theatre.model");
 
+const createTestShows = async (req, res) => {
+    try {
+        const movies = await movieModel.find({});
+        const theatres = await theatreModel.find({});
+
+        if (movies.length === 0) {
+            return res.status(404).json({ success: false, message: "No movies found in DB to create shows for." });
+        }
+        if (theatres.length === 0) {
+            return res.status(404).json({ success: false, message: "No theatres found in DB to create shows for." });
+        }
+        const commonShowTimes = ['10:00 AM', '04:00 PM', '10:00 PM'];
+        const daysToCreate = 5;
+        const defaultTotalSeats = 150;
+        const defaultTicketPrice = 250;
+
+        const allShowsCreated = [];
+        const existingShowsSkipped = [];
+
+        for (const movie of movies) {
+            for (const theatre of theatres) {
+                for (let i = 0; i < daysToCreate; i++) {
+                    const showDate = new Date();
+                    showDate.setDate(showDate.getDate() + i);
+                    showDate.setHours(0, 0, 0, 0); 
+
+                    for (const time of commonShowTimes) {
+                        const existingShow = await showModel.findOne({
+                            movie: movie._id,
+                            theatre: theatre._id,
+                            showDate: showDate,
+                            showTime: time
+                        });
+
+                        if (!existingShow) {
+                            const newShow = new showModel({
+                                movie: movie._id,
+                                theatre: theatre._id,
+                                showDate: showDate,
+                                showTime: time, 
+                                totalSeats: defaultTotalSeats,
+                                bookedSeats: [],
+                                ticketPrice: defaultTicketPrice,
+                            });
+                            await newShow.save();
+                            allShowsCreated.push(newShow._id);
+                        } else {
+                            existingShowsSkipped.push(existingShow._id);
+                        }
+                    }
+                }
+            }
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Automation complete. Created ${allShowsCreated.length} new shows. ${existingShowsSkipped.length} existing shows skipped.`,
+            newShows: allShowsCreated,
+            skippedShows: existingShowsSkipped.map(id => id.toString())
+        });
+
+    } catch (error) {
+        console.error("Error in createTestShows:", error);
+        res.status(500).json({ success: false, message: "Server error: Failed to automate show creation." });
+    }
+};
+
+
 const createShow = async (req, res) =>{
     const {movie, theatre, showDate, showTime, totalSeats} = req.body;
     try{
@@ -132,5 +200,6 @@ module.exports = {
     createShow,
     getAllShows,
     getTheatresAndShowsByMovie,
-    getShowDetailsByShowId
+    getShowDetailsByShowId,
+    createTestShows
 }

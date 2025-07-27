@@ -139,8 +139,58 @@ const createBooking = async(req,res) => {
     }
 }
 
+const getUserBookings = async (req, res) => {
+    try {
+        
+        
+        const userId = req.userDetails?._id; 
+                                            
+        
+
+        if (!userId) {
+            
+            
+            return res.status(401).json({ success: false, message: "Authentication required: User details not found in request after verification." });
+        }
+
+        
+        const bookings = await bookingModel.find({ user: userId })
+                                    .populate({
+                                        path: 'show', 
+                                        model: 'shows_user', 
+                                        populate: [ 
+                                            {
+                                                path: 'movie', 
+                                                model: 'movie_user' 
+                                            },
+                                            {
+                                                path: 'theatre', 
+                                                model: 'theatre_user' 
+                                            }
+                                        ]
+                                    })
+                                    .sort({ bookedAt: -1 }); 
+
+        
+        const validBookings = bookings.filter(booking =>
+            booking.show &&
+            booking.show.movie &&
+            booking.show.theatre &&
+            booking.show.showDate && 
+            booking.show.showTime 
+        );
+
+        return res.status(200).json({ success: true, data: validBookings });
+
+    } catch (error) {
+        console.error('Error fetching user bookings:', error);
+        return res.status(500).json({ success: false, message: 'Server error: Could not retrieve your bookings.' });
+    }
+};
+
 
 module.exports = {
     getBookingById,
     createBooking,
+    getUserBookings
 }

@@ -11,7 +11,9 @@ const showRoutes = require("./routes/show.routes");
 const bookingRoutes = require("./routes/booking.routes");
 const paymentRoutes = require('./routes/payment.routes');
 const deleteOldShows = require('./utils/deletePastShows');
-
+const watchlistRoutes = require('./routes/watchlist.routes');
+const { createTestShows } = require('./controllers/show.controller');
+const { userModel } = require('./models/user.model');
 
 const app = express();
 
@@ -30,6 +32,60 @@ theatreRoutes(app);
 showRoutes(app);
 bookingRoutes(app);
 paymentRoutes(app);
+watchlistRoutes(app);
+
+let adminUserId = null;
+
+const initializeAdminUserId = async () => {
+    try {
+        const adminUser = await userModel.findOne({ userType: 'admin' }).select('_id');
+        if (adminUser) {
+            adminUserId = adminUser._id;
+            console.log(`[Cron Init] Found admin user ID: ${adminUserId}`);
+        } else {
+            console.warn('[Cron Init] No admin user found in DB. Automated show creation might fail if route is admin-protected.');
+            console.warn('[Cron Init] Please ensure you have at least one user with userType: "admin" in your database.');
+        }
+    } catch (error) {
+        console.error('[Cron Init] Error finding admin user for cron job:', error);
+    }
+};
+
+cron.schedule('0 17 * * *', async () => { 
+    console.log('[Cron Job] Running daily task: Creating test shows for all movies and theatres...');
+    if (!adminUserId) {
+        await initializeAdminUserId(); 
+    }
+    if (!adminUserId) {
+        console.error('[Cron Job] Skipping show creation: No admin user ID available for authentication. Please create an admin user.');
+        return;
+    }
+
+    try {
+        const mockReq = {
+            userDetails: { _id: adminUserId, userType: 'admin' }, 
+            body: {} 
+        };
+        const mockRes = {
+            status: (code) => {
+                console.log(`[Cron Job - CreateShows] API Response Status: ${code}`);
+                return mockRes;
+            },
+            json: (data) => {
+                console.log('[Cron Job - CreateShows] API Response:', data);
+            }
+        };
+
+        await createTestShows(mockReq, mockRes);
+        console.log('[Cron Job] Daily test shows creation complete.');
+
+    } catch (error) {
+        console.error('[Cron Job - CreateShows] Critical Error in daily test show cron job:', error);
+    }
+}, {
+    scheduled: true,
+    timezone: "Asia/Kolkata" 
+});
 
 cron.schedule('0 15 * * *', () => {
     console.log('Running scheduled job: Deleting past shows...');
@@ -40,6 +96,7 @@ cron.schedule('0 15 * * *', () => {
 });
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(` Server is running successfully on port: ${port}`);
+  await initializeAdminUserId();
 });
