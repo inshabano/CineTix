@@ -372,21 +372,17 @@
 }
 
 .details h2 {
-   
     font-size: 45px;
     color: #111;
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
-    margin-bottom: 0;
+    margin-bottom: 4px;
     line-height: 1.2; 
 }
 
-
 .watchlistHeartButton {
-   
     width: 40px;  
     height: 36px; 
-    
     border-radius: 50%;
     background: rgb(3, 23, 61) !important;
     border: 2px solid rgb(2, 2, 50) !important;
@@ -398,23 +394,15 @@
     justify-content: center;
     margin-top: 30px;
     flex-shrink: 0;
-
-   
     transform: translateY(2px);
-   
-
-   
     &::before,
     &::after {
         transition: background 0.5s ease;
         position: absolute;
-        content: "";
-        
-       
-        width: 15px;
-        height: 24px;
-        top: 8px;     
-
+        content: ""; 
+        width: 10px;
+        height: 16px;
+        top: 11px;     
         border-radius: 15px 15px 0 0;
     }
 
@@ -426,7 +414,7 @@
     }
 
     &::after {
-        left: 5px;
+        left: 10px;
         background: rgb(252, 250, 252) !important;
         transform: rotate(45deg);
         transform-origin: 100% 100%;
@@ -441,14 +429,11 @@
     }
 }
 
-
 .watchlistHeartButton:disabled {
     pointer-events: none;
     opacity: 0.2 !important; 
     cursor: default;
 }
-
-
 
 @media (max-width: 992px) {
 
@@ -507,8 +492,6 @@
     }
 
 }
-
-
 
 @media (max-width: 576px) {
 

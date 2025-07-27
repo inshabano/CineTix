@@ -6,6 +6,7 @@ import { addMovieToWatchlist, removeMovieFromWatchlist, getWatchlist } from "../
 import Loader from '../../components/Loader'; 
 import mojs from '@mojs/core';
 import $ from 'jquery';
+import { message } from 'antd';
 
 const getLocalFormattedDateString = (date) => {
     const year = date.getFullYear();
@@ -40,6 +41,24 @@ const MovieDetail = () => {
                     console.error("Failed to fetch movie data:", response);
                     setMovie(null);
                     setError(response.message || "Failed to fetch movie details.");
+                }
+                //  console.log(" Watchlist Persistence Debugging ---");
+                // console.log("fetching watchlist");
+                const watchlistResponse = await getWatchlist();
+                // console.log("Watchlist API Response:", watchlistResponse);
+
+                if (watchlistResponse.success && watchlistResponse.data) {
+                    const watchlistMovieIds = watchlistResponse.data.map(item => item._id);
+                    const movieIsCurrentlyInWatchlist = watchlistMovieIds.includes(movieid);
+                    setIsInWatchlist(movieIsCurrentlyInWatchlist);
+                    console.log(`Movie ID "${movieid}" in fetched watchlist: ${movieIsCurrentlyInWatchlist}`);
+                } else if (!watchlistResponse.success && watchlistResponse.message === "User not authenticated.") {
+                    console.log("User not authenticated. Heart defaults to white.");
+                    setIsInWatchlist(false); 
+                } else {
+                    console.error("Failed to fetch watchlist with error:", watchlistResponse.message);
+                    message.error(watchlistResponse.message || "Could not retrieve watchlist status.");
+                    setIsInWatchlist(false); 
                 }
             } catch (error) {
                 console.error("Error fetching movie details:", error);

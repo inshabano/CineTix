@@ -13,6 +13,7 @@ import BookingSuccessPage from './pages/BookingSuccess';
 import 'react-calendar/dist/Calendar.css';
 import MyBookings from './pages/myBooking';
 import Watchlist from './pages/Watchlist';
+import MyProfile from './pages/MyProfile';
 
 const Layout = ({ children }) => {
     const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
                         <Route path="/booking-success/:bookingId" element={<BookingSuccessPage />} />
                         <Route path="/mybookings" element={<MyBookings/>} />
                         <Route path="/my-watchlist" element={<Watchlist />} />
+                        <Route path="/my-profile" element={<MyProfile />} />
                     </Routes>
                 </Layout>
             </BrowserRouter>

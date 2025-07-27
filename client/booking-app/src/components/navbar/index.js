@@ -180,7 +180,7 @@ useEffect(() => {
                             </button>
                             {isUserDropdownOpen && (
                                 <ul className={styles['user-dropdown-menu']}>
-                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/profile'); }}>
+                                    <li onClick={() => { setIsUserDropdownOpen(false); navigate('/my-profile'); }}>
                                         <UserOutlined /> My Profile
                                     </li>
                                     <li onClick={() => { setIsUserDropdownOpen(false); navigate('/mybookings'); }}>
@@ -224,13 +224,13 @@ useEffect(() => {
 
                     {isLoggedIn && (
                         <ul className={styles['mobile-menu']}>
-                            <li onClick={() => { onCloseDrawer(); navigate('/profile'); }}>
+                            <li onClick={() => { onCloseDrawer(); navigate('/my-profile'); }}>
                                 <UserOutlined /> My Profile
                             </li>
                             <li onClick={() => { onCloseDrawer(); navigate('/mybookings'); }}>
                                 <BookOutlined /> My Bookings
                             </li>
-                            <li onClick={() => { onCloseDrawer(); navigate('/wishlist'); }}>
+                            <li onClick={() => { onCloseDrawer(); navigate('/my-wishlist'); }}>
                                 <HeartOutlined /> Wishlist
                             </li>
                             <li className={styles['menu-divider']}></li>
