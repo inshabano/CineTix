@@ -12,6 +12,7 @@ const bookingRoutes = require("./routes/booking.routes");
 const paymentRoutes = require('./routes/payment.routes');
 const deleteOldShows = require('./utils/deletePastShows');
 const watchlistRoutes = require('./routes/watchlist.routes');
+const adminRoutes = require('./routes/admin.routes')
 const { createTestShows } = require('./controllers/show.controller');
 const { userModel } = require('./models/user.model');
 
@@ -33,6 +34,7 @@ showRoutes(app);
 bookingRoutes(app);
 paymentRoutes(app);
 watchlistRoutes(app);
+adminRoutes(app);
 
 let adminUserId = null;
 
@@ -51,7 +53,8 @@ const initializeAdminUserId = async () => {
     }
 };
 
-cron.schedule('0 17 * * *', async () => { 
+cron.schedule('0 14 * * *', async () => { 
+    console.log(`[Cron Job] Triggered at ${new Date()}`);
     console.log('[Cron Job] Running daily task: Creating test shows for all movies and theatres...');
     if (!adminUserId) {
         await initializeAdminUserId(); 
@@ -87,7 +90,7 @@ cron.schedule('0 17 * * *', async () => {
     timezone: "Asia/Kolkata" 
 });
 
-cron.schedule('0 15 * * *', () => {
+cron.schedule('0 0 * * *', () => {
     console.log('Running scheduled job: Deleting past shows...');
     deleteOldShows();
 }, {

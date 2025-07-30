@@ -1,273 +1,315 @@
 .container {
-    padding: 30px 40px;
-    background-color: #f5f5f5;
-    min-height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    color: #333;
+  padding: 30px 40px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
 }
 
 .profileHeader {
-    text-align: center;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #eee;
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
 }
 
 .profileHeader h1 {
-    font-size: 3.5em;
-    color: #ef424a;
-    margin-bottom: 10px;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  font-size: 3.5em;
+  color: #ef424a;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
-    font-size: 1.2em;
-    color: #666;
-    margin-top: 0;
+  font-size: 1.2em;
+  color: #666;
+  margin-top: 0;
 }
 
 .profileContent {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .cardTitle {
-    font-size: 2em;
-    color: #f23636;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f0f0f0;
-    font-weight: 600;
-    text-align: left;
+  font-size: 2em;
+  color: #f23636;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+  font-weight: 600;
+  text-align: left;
 }
 
 .profileContent .cardTitle:first-of-type {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .card {
-    padding: 0;
-    margin-bottom: 25px;
-   
+  padding: 0;
+  margin-bottom: 25px;
 }
 
 .infoBlock {
-    padding: 20px 0;
-    text-align: left;
+  padding: 20px 0;
+  text-align: left;
 }
 
 .detailRow {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-    padding-bottom: 5px;
-    border-bottom: 1px dashed #f0f0f0;
-    text-align: start;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #f0f0f0;
+  text-align: start;
 }
 
 .detailRow:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .detailLabel {
-    font-weight: 600;
-    color: #555;
-    flex-basis: 40%;
+  font-weight: 600;
+  color: #555;
+  flex-basis: 40%;
 }
 
 .detailValue {
-    color: #222;
-    flex-basis: 60%;
-    word-wrap: break-word;
+  color: #222;
+  flex-basis: 60%;
+  word-wrap: break-word;
 }
 
-
 .editForm {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .formGroup {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .formLabel {
-    display: block;
-    font-size: 0.9em;
-    color: #333131;
-    margin-bottom: 5px;
-    font-weight: 500;
-    text-align: left;
+  display: block;
+  font-size: 0.9em;
+  color: #333131;
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align: left;
 }
 
 .formInput {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
-    box-sizing: border-box;
-    color: #faf5f5;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  box-sizing: border-box;
+  color: #faf5f5;
 }
 
-
 .formInput:focus {
-    outline: none;
-    border-color: #ef424a;
-    box-shadow: 0 0 0 2px rgba(239, 66, 74, 0.2);
+  outline: none;
+  border-color: #ef424a;
+  box-shadow: 0 0 0 2px rgba(239, 66, 74, 0.2);
 }
 
 .formActions {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-    justify-content: flex-start;
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  justify-content: flex-start;
 }
 
-
-.editButton, .saveButton, .cancelButton, .activityLink, .exploreButton {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    flex-shrink: 0;
-    display: inline-block;
-    margin-top: 15px;
-    text-decoration: none;
-    text-align: center;
+.editButton,
+.saveButton,
+.cancelButton,
+.activityLink,
+.exploreButton {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  flex-shrink: 0;
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+  text-align: center;
 }
 .editButton {
-    background-color: #007bff;
-    color: white;
-    margin-left: 0;
-    margin-right: auto;
-    display: block;
-    width: fit-content;
-   
+  background-color: #007bff;
+  color: white;
+  margin-left: 0;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
 }
 
-.editButton { background-color: #007bff; color: white;  }
-.saveButton { background-color: #28a745; color: white; }
-.cancelButton { background-color: #6c757d; color: white; }
-.activityLink { background-color: #ef424a; color: white; }
-.exploreButton { background-color: #007bff; color: white; }
+.editButton {
+  background-color: #007bff;
+  color: white;
+}
+.saveButton {
+  background-color: #28a745;
+  color: white;
+}
+.cancelButton {
+  background-color: #6c757d;
+  color: white;
+}
+.activityLink {
+  background-color: #ef424a;
+  color: white;
+}
+.exploreButton {
+  background-color: #007bff;
+  color: white;
+}
 
-.editButton:hover { background-color: #0056b3; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); }
-.saveButton:hover { background-color: #218838; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2); }
-.cancelButton:hover { background-color: #5a6268; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(108, 117, 125, 0.2); }
-.activityLink:hover { background-color: #e02f38; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
-.exploreButton:hover { background-color: #0056b3; transform: translateY(-2px); }
+.editButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+.saveButton:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+.cancelButton:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(108, 117, 125, 0.2);
+}
+.activityLink:hover {
+  background-color: #e02f38;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.exploreButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
 
-.editButton:active, .saveButton:active, .cancelButton:active, .exploreButton:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+.editButton:active,
+.saveButton:active,
+.cancelButton:active,
+.exploreButton:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .saveButton:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    color: #888;
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: #888;
 }
 
 .activityLinksContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
 }
 
-.errorMessage, .emptyState {
-    text-align: center;
-    padding: 50px;
-    font-size: 1.5em;
-    color: #dc3545;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    max-width: 600px;
-    margin: 50px auto;
+.errorMessage,
+.emptyState {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.5em;
+  color: #dc3545;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 50px auto;
 }
 .emptyState {
-    color: #666;
+  color: #666;
 }
 .errorMessage h2 {
-    color: #dc3545;
+  color: #dc3545;
 }
 .errorMessage p {
-    font-size: 0.8em;
-    color: #888;
+  font-size: 0.8em;
+  color: #888;
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 40px 20px;
-    }
-    .profileHeader h1 {
-        font-size: 2.8em;
-    }
-    .subtitle {
-        font-size: 1em;
-    }
-    .profileContent {
-        padding: 25px 30px;
-    }
-    .cardTitle {
-        font-size: 1.8em;
-        margin-top: 25px;
-        margin-bottom: 15px;
-    }
-    .infoBlock {
-        margin-bottom: 25px;
-    }
-    .detailRow, .formGroup {
-        font-size: 1em;
-    }
-    .formActions {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .editButton, .saveButton, .cancelButton, .activityLink, .exploreButton {
-        width: 100%;
-        max-width: none;
-        padding: 10px 20px;
-        font-size: 0.9em;
-        margin-top: 10px;
-    }
-    .activityLinksContainer {
-        flex-direction: column;
-    }
+  .container {
+    padding: 40px 20px;
+  }
+  .profileHeader h1 {
+    font-size: 2.8em;
+  }
+  .subtitle {
+    font-size: 1em;
+  }
+  .profileContent {
+    padding: 25px 30px;
+  }
+  .cardTitle {
+    font-size: 1.8em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+  .infoBlock {
+    margin-bottom: 25px;
+  }
+  .detailRow,
+  .formGroup {
+    font-size: 1em;
+  }
+  .formActions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .editButton,
+  .saveButton,
+  .cancelButton,
+  .activityLink,
+  .exploreButton {
+    width: 100%;
+    max-width: none;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    margin-top: 10px;
+  }
+  .activityLinksContainer {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 20px 15px;
-    }
-    .profileHeader h1 {
-        font-size: 2.2em;
-    }
-    .profileContent {
-        padding: 20px 20px;
-    }
-    .cardTitle {
-        font-size: 1.5em;
-    }
-    .detailRow, .formGroup {
-        font-size: 0.9em;
-    }
+  .container {
+    padding: 20px 15px;
+  }
+  .profileHeader h1 {
+    font-size: 2.2em;
+  }
+  .profileContent {
+    padding: 20px 20px;
+  }
+  .cardTitle {
+    font-size: 1.5em;
+  }
+  .detailRow,
+  .formGroup {
+    font-size: 0.9em;
+  }
 }

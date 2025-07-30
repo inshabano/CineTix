@@ -59,8 +59,8 @@ const Register = () => {
               message: "Please input your email!",
             },
             {
-              type: "email", 
-              message: "The input is not a valid E-mail!", 
+              type: "email",
+              message: "The input is not a valid E-mail!",
             },
           ]}
           labelCol={{
@@ -81,7 +81,7 @@ const Register = () => {
               message: "Please input your password!", // Added custom message
             },
             {
-              min: 6, 
+              min: 6,
               message: "Password must be at least 6 characters long!",
             },
           ]}

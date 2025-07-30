@@ -6,24 +6,23 @@ const Login = () => {
   const navigate = useNavigate();
   const onLogin = async (values) => {
     console.log(values);
-    const {email,password} = values;
+    const { email, password } = values;
     const input = {
-       email,password
-    }
+      email,
+      password,
+    };
     const response = await LoginUser(input);
     console.log(response);
-    if(response.success){
+    if (response.success) {
       message.success(response.message);
       const jwtToken = response.accessToken;
-      localStorage.setItem("token",jwtToken);
-      localStorage.setItem('username', response.username);
+      localStorage.setItem("token", jwtToken);
+      localStorage.setItem("username", response.username);
       navigate("/");
-    }
-    else{
+    } else {
       message.error(response.message);
     }
   };
-
 
   const [form] = Form.useForm();
 
@@ -75,11 +74,11 @@ const Login = () => {
             Login
           </Button>
         </Form.Item>
+        <div>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
         <p>
           New User? <Link to="/register">Register Here</Link>
-        </p>
-        <p>
-          Forgot Password? <Link to="/forgotpassword"></Link>      
         </p>
       </Form>
     </div>

@@ -18,7 +18,8 @@
   flex: 1 1 250px;
 }
 
-.footerSection h3, .footerSection h4 {
+.footerSection h3,
+.footerSection h4 {
   margin-bottom: 12px;
   font-weight: 600;
 }

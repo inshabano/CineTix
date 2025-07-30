@@ -1,59 +1,58 @@
-
 .container {
-    padding: 70px 40px;
-    background-color: #f5f5f5;
-    min-height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    color: #222;
-    position: relative; 
+  padding: 70px 40px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  color: #222;
+  position: relative;
 }
 
 .posterDetailsBackground {
-    position: relative;
-    border-radius: 16px;
-    margin-bottom: 40px;
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  border-radius: 16px;
+  margin-bottom: 40px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .posterDetailsOverlay {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 50px;
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius: 16px;
-    padding: 70px;
-    z-index: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 16px;
+  padding: 70px;
+  z-index: 1;
 }
 
 .poster {
-    width: 280px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .details {
-    flex: 1;
-    text-align: left;
+  flex: 1;
+  text-align: left;
 }
 
 .details h2 {
-    font-size: 45px;
-    margin-bottom: 20px;
-    color: #111;
-    font-family: 'Roboto', sans-serif;
-    font-weight:700
+  font-size: 45px;
+  margin-bottom: 20px;
+  color: #111;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
 }
 
 .details p {
-    font-size: 20px;
-    font-weight: 400;
-    margin: 6px 0;
-    line-height: 1.5;
-    color: #250101;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 6px 0;
+  line-height: 1.5;
+  color: #250101;
 }
 
 .bookButton {
@@ -81,476 +80,466 @@
 }
 
 .aboutSection {
-    margin-bottom: 50px;
-    text-align: left;
+  margin-bottom: 50px;
+  text-align: left;
 }
 
 .aboutSection h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .aboutSection p {
-    font-size: 16px;
-    font-weight:400;
-    line-height: 1.6;
-    color: #0b0b0b;
-    background-color: #faeaea;
-    padding: 20px;
-    border-radius: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #0b0b0b;
+  background-color: #faeaea;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .peopleSection {
-    margin-bottom: 60px;
-    padding-left: 6px;
-    text-align: left;
-    background-color: rgb(228, 248, 248);
-    padding: 20px; 
-    border-radius: 10px; 
+  margin-bottom: 60px;
+  padding-left: 6px;
+  text-align: left;
+  background-color: rgb(228, 248, 248);
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .peopleSection h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #2c2c2c;
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #2c2c2c;
 }
 
 .castList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    padding: 10px 0;
-   
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 10px 0;
 }
 
 .personCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 110px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  text-align: center;
 }
 
 .personPhoto {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 8px;
-    background-color: #fff;
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+  background-color: #fff;
 }
 
 .personPhotoPlaceholder {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    background-color: #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    color: #666;
-    margin-bottom: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: #666;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .personName {
-    font-size: 14px;
-    color: #333;
-    margin-top: 4px;
+  font-size: 14px;
+  color: #333;
+  margin-top: 4px;
 }
 
 .characterName {
-    font-size: 12px;
-    color: #666;
-    margin-top: 2px;
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
 }
 
 .calendarOverlay {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .calendarBox {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    position: relative;
-    width: 100%;
-    max-width: 400px; 
-    text-align: center;
-    animation: fadeInScale 0.3s ease-out; 
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInScale 0.3s ease-out;
 }
 
 @keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .closeCalendarBtn {
-    position: absolute;
-    top: 15px;
-    left: 220px;
-    background: none;
-    border: none;
-    font-size: 1.8em;
-    cursor: pointer;
-    color: #666;
-    padding: 5px;
-    transition: color 0.2s ease;
+  position: absolute;
+  top: 15px;
+  left: 220px;
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+  transition: color 0.2s ease;
 }
 
 .closeCalendarBtn:hover {
-    color: #333;
+  color: #333;
 }
 
 .calendarBox h3 {
-    font-size: 1.8em;
-    color: #333;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
 }
 
 .simpleCalendar {
-    font-family: Arial, sans-serif;
-    user-select: none;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #fcfcfc;
+  font-family: Arial, sans-serif;
+  user-select: none;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fcfcfc;
 }
 
 .calendarHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 1.3em;
-    color: #444;
-    padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #444;
+  padding: 0 10px;
 }
 
 .monthYear {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .navArrows .arrow {
-    cursor: not-allowed;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 0 5px;
-    background-color: #f5f5f5;
-    color: #aaa;
+  cursor: not-allowed;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
+  background-color: #f5f5f5;
+  color: #aaa;
 }
 
 .weekDays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    font-weight: bold;
-    color: #777;
-    margin-bottom: 10px;
-    background-color: #eef;
-    padding: 8px 0;
-    border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  color: #777;
+  margin-bottom: 10px;
+  background-color: #eef;
+  padding: 8px 0;
+  border-radius: 5px;
 }
 
 .weekDays span {
-    padding: 5px 0;
+  padding: 5px 0;
 }
 
 .daysGrid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    text-align: center;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
 }
 
 .day {
-    padding: 12px 0;
-    border-radius: 6px;
-    transition: background-color 0.2s ease, color 0.2s ease, border 0.2s ease;
-    font-size: 1.1em;
-    font-weight: 500;
-    border: 1px solid #e0e0e0;
-}
- 
-.emptyDay {
-    background-color: transparent;
-    border: none;
-    cursor: default;
+  padding: 12px 0;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease, border 0.2s ease;
+  font-size: 1.1em;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
 }
 
-.selectableDay { 
-    background-color: #f0f8ff;
-    color: #333;
-    cursor: pointer;
+.emptyDay {
+  background-color: transparent;
+  border: none;
+  cursor: default;
+}
+
+.selectableDay {
+  background-color: #f0f8ff;
+  color: #333;
+  cursor: pointer;
 }
 
 .selectableDay:hover {
-    background-color: #e6f2ff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #e6f2ff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.disabledDay { 
-    color: #bbb;
-    cursor: not-allowed;
-    background-color: #fbfbfb;
-    border-color: #f0f0f0;
+.disabledDay {
+  color: #bbb;
+  cursor: not-allowed;
+  background-color: #fbfbfb;
+  border-color: #f0f0f0;
 }
 
 .todayDay {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    border-color: #007bff;
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
 }
 
 .calendarFooter {
-    margin-top: 25px;
-    display: flex;
-    justify-content: flex-end; 
-    padding: 0 10px;
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10px;
 }
 
 .todayButton {
-    background: #ef424a; 
-    border: none;
-    color: white;
-    font-size: 1.1em;
-    cursor: pointer;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+  background: #ef424a;
+  border: none;
+  color: white;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .todayButton:hover {
-    background-color: #e02f38;
-    transform: translateY(-1px);
+  background-color: #e02f38;
+  transform: translateY(-1px);
 }
 .todayButton:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
-.loadingMessage, .errorMessage, .noMovieFound {
-    text-align: center;
-    padding: 50px;
-    font-size: 1.5em;
-    color: #666;
+.loadingMessage,
+.errorMessage,
+.noMovieFound {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.5em;
+  color: #666;
 }
 .errorMessage {
-    color: #dc3545;
+  color: #dc3545;
 }
 
 .titleAndWatchlist {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 .details h2 {
-    font-size: 45px;
-    color: #111;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    margin-bottom: 4px;
-    line-height: 1.2; 
+  font-size: 45px;
+  color: #111;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .watchlistHeartButton {
-    width: 40px;  
-    height: 36px; 
-    border-radius: 50%;
-    background: rgb(3, 23, 61) !important;
-    border: 2px solid rgb(2, 2, 50) !important;
-    cursor: pointer;
-    transition: background 0.5s ease; 
-    position: relative;
-    align-items: center;
-    display: flex; 
-    justify-content: center;
-    margin-top: 30px;
-    flex-shrink: 0;
-    transform: translateY(2px);
-    &::before,
-    &::after {
-        transition: background 0.5s ease;
-        position: absolute;
-        content: ""; 
-        width: 10px;
-        height: 16px;
-        top: 11px;     
-        border-radius: 15px 15px 0 0;
-    }
+  width: 40px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgb(3, 23, 61) !important;
+  border: 2px solid rgb(2, 2, 50) !important;
+  cursor: pointer;
+  transition: background 0.5s ease;
+  position: relative;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  flex-shrink: 0;
+  transform: translateY(2px);
+  &::before,
+  &::after {
+    transition: background 0.5s ease;
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 16px;
+    top: 11px;
+    border-radius: 15px 15px 0 0;
+  }
 
-    &::before {
-        left: 20px;
-        background: rgb(252, 250, 252) !important;
-        transform: rotate(-45deg);
-        transform-origin: 0 100%;
-    }
+  &::before {
+    left: 20px;
+    background: rgb(252, 250, 252) !important;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
 
-    &::after {
-        left: 10px;
-        background: rgb(252, 250, 252) !important;
-        transform: rotate(45deg);
-        transform-origin: 100% 100%;
-    }
+  &::after {
+    left: 10px;
+    background: rgb(252, 250, 252) !important;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
 }
 
-
 .activeHeart {
-    &.watchlistHeartButton::before,
-    &.watchlistHeartButton::after {
-        background: #ef424a  !important;
-    }
+  &.watchlistHeartButton::before,
+  &.watchlistHeartButton::after {
+    background: #ef424a !important;
+  }
 }
 
 .watchlistHeartButton:disabled {
-    pointer-events: none;
-    opacity: 0.2 !important; 
-    cursor: default;
+  pointer-events: none;
+  opacity: 0.2 !important;
+  cursor: default;
 }
 
 @media (max-width: 992px) {
+  .posterDetailsOverlay {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 30px;
+    gap: 30px;
+  }
 
-    .posterDetailsOverlay {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 50px 30px;
-        gap: 30px;
-    }
+  .poster {
+    width: 200px;
+  }
 
-    .poster {
-        width: 200px;
-    }
+  .details h2 {
+    font-size: 38px;
+  }
 
-    .details h2 {
-        font-size: 38px;
-    }
+  .details p {
+    font-size: 18px;
+  }
+  .bookButton {
+    width: 200px;
+    padding: 15px;
+    font-size: 16px;
+  }
 
-    .details p {
-        font-size: 18px;
-    }
-    .bookButton {
-        width: 200px;
-        padding: 15px;
-        font-size: 16px;
-    }
+  .calendarBox {
+    max-width: 350px;
+    padding: 20px;
+  }
 
-    .calendarBox {
-        max-width: 350px;
-        padding: 20px;
-    }
-
-    .calendarBox h3 {
-        font-size: 1.5em;
-    }
-
+  .calendarBox h3 {
+    font-size: 1.5em;
+  }
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
 
-    .container {
-        padding: 20px;
-    }
+  .posterDetailsOverlay {
+    padding: 40px 20px;
+  }
 
-    .posterDetailsOverlay {
-        padding: 40px 20px;
-    }
+  .aboutSection p {
+    padding: 15px;
+  }
 
-    .aboutSection p {
-        padding: 15px;
-    }
-
-    .peopleSection {
-        padding: 15px;
-    }
-
+  .peopleSection {
+    padding: 15px;
+  }
 }
 
 @media (max-width: 576px) {
+  .details h2 {
+    font-size: 30px;
+  }
 
-    .details h2 {
-        font-size: 30px;
-    }
+  .details p {
+    font-size: 16px;
+  }
 
-    .details p {
-        font-size: 16px;
-    }
+  .poster {
+    width: 180px;
+  }
 
-    .poster {
-        width: 180px;
-    }
+  .calendarBox {
+    max-width: 95%;
+    padding: 15px;
+  }
 
-    .calendarBox {
-        max-width: 95%;
-        padding: 15px;
-    }
+  .simpleCalendar {
+    padding: 5px;
+  }
 
-    .simpleCalendar {
-        padding: 5px;
-    }
+  .daysGrid .day {
+    padding: 8px 0;
+    font-size: 1em;
+  }
 
-    .daysGrid .day {
-        padding: 8px 0;
-        font-size: 1em;
+  .calendarBox h3 {
+    font-size: 1.3em;
+  }
 
-    }
+  .weekDays span {
+    font-size: 0.9em;
+  }
 
-    .calendarBox h3 {
-        font-size: 1.3em;
-    }
+  .calendarFooter button {
+    font-size: 0.9em;
+    padding: 8px 12px;
+  }
 
-    .weekDays span {
-        font-size: 0.9em;
-    }
-
-    .calendarFooter button {
-        font-size: 0.9em;
-        padding: 8px 12px;
-
-    }
-
-     .watchlistHeartButton {
-        width: 25px;
-        height: 22px;
-        transform: translateY(1px);
-    }
-    .watchlistHeartButton::before,
-    .watchlistHeartButton::after {
-        width: 12.5px;
-        height: 20px;
-        left: 12.5px;
-    }
-    .watchlistHeartButton::after {
-        left: 0;
-    }
-
+  .watchlistHeartButton {
+    width: 25px;
+    height: 22px;
+    transform: translateY(1px);
+  }
+  .watchlistHeartButton::before,
+  .watchlistHeartButton::after {
+    width: 12.5px;
+    height: 20px;
+    left: 12.5px;
+  }
+  .watchlistHeartButton::after {
+    left: 0;
+  }
 }
-
-

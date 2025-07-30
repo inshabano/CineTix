@@ -1,0 +1,156 @@
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #ece9e6, #ffffff);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.authCard {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 400px;
+  max-width: 450px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  margin: auto;
+}
+
+.authTitle {
+  font-size: 2.5em;
+  color: #333;
+  margin-top: 1px;
+  font-weight: 700;
+}
+
+.authSubtitle {
+  font-size: 1.1em;
+  color: #666;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+
+.authForm {
+  margin-top: 120px;
+  text-align: left;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #fdfbfb;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #ef424a;
+  box-shadow: 0 0 0 3px rgba(239, 66, 74, 0.2);
+}
+
+.authButton {
+  width: 100%;
+  padding: 15px;
+  background-color: #ef424a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(239, 66, 74, 0.2);
+}
+
+.authButton:hover {
+  background-color: #e02f38;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(239, 66, 74, 0.3);
+}
+
+.authButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(239, 66, 74, 0.2);
+}
+
+.authButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: #888;
+}
+
+.authLinkContainer {
+  margin-top: 260px;
+  font-size: 0.95em;
+  color: #777;
+}
+
+.authLink {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.authLink:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .authCard {
+    padding: 30px;
+
+    margin: auto;
+  }
+  .authTitle {
+    font-size: 2em;
+  }
+  .authSubtitle {
+    font-size: 1em;
+  }
+  .formInput {
+    padding: 10px 12px;
+  }
+  .authButton {
+    padding: 12px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .authCard {
+    padding: 25px;
+  }
+  .authTitle {
+    font-size: 1.8em;
+  }
+  .authSubtitle {
+    font-size: 0.9em;
+  }
+}
