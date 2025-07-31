@@ -6,11 +6,13 @@ import {
   LogoutOutlined,
   BookOutlined,
   HeartOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
 
 import styles from "./navbar.module.css";
 import { useNavigate } from "react-router-dom";
 import { searchMoviesSuggestions } from "../../services/movies";
+import { useUser } from "../../context/UserContext";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,6 +26,7 @@ const Navbar = () => {
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const { user, isAuthenticated, isAdmin, isPartner, logoutUser } = useUser();
 
   const checkLoginStatus = () => {
     const token = localStorage.getItem("token");
@@ -221,6 +224,16 @@ const Navbar = () => {
                   >
                     <HeartOutlined /> Watchlist
                   </li>
+                  {(isPartner || isAdmin) && (
+                    <li
+                      onClick={() => {
+                        setIsUserDropdownOpen(false); // Close dropdown
+                        navigate("/partner-dashboard");
+                      }}
+                    >
+                      <DashboardOutlined /> Partner Dashboard
+                    </li>
+                  )}
                   <li className={styles["menu-divider"]}></li>
                   <li
                     onClick={handleLogoutClick}
