@@ -11,7 +11,7 @@ const movieSchema = new mongoose.Schema({
     },
     duration: {
         type: String,
-        required: true, // Fixed typo: 'reuired' to 'required'
+        required: true, 
     },
     language: {
         type: String,
@@ -40,8 +40,8 @@ const movieSchema = new mongoose.Schema({
     cast: [
         {
             name: { type: String, required: false },
-            photo: { type: String, required: false }, // Photo is optional
-            characterName: { type: String, required: false } // Character name is optional
+            photo: { type: String, required: false }, 
+            characterName: { type: String, required: false } 
         }
     ]
 });

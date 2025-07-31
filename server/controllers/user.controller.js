@@ -74,6 +74,7 @@ const onLogin = async (req, res) => {
     const token = jwt.sign(
       { userId: existingUser._id },
       process.env.SECRET_KEY
+      
     );
     return res.status(201).send({
       success: true,

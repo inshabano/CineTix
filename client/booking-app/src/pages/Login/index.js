@@ -2,8 +2,10 @@ import { Button, Form, Input, message } from "antd";
 import "./index.css";
 import { Link, useNavigate } from "react-router";
 import { LoginUser } from "../../services/auth";
+import { useUser } from '../../context/UserContext';
 const Login = () => {
   const navigate = useNavigate();
+  const { loginUser } = useUser();
   const onLogin = async (values) => {
     console.log(values);
     const { email, password } = values;
@@ -18,6 +20,7 @@ const Login = () => {
       const jwtToken = response.accessToken;
       localStorage.setItem("token", jwtToken);
       localStorage.setItem("username", response.username);
+      loginUser(response.username, jwtToken);
       navigate("/");
     } else {
       message.error(response.message);

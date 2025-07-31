@@ -58,6 +58,10 @@
   margin-bottom: 20px;
 }
 
+Button{
+  width: 300;
+}
+
 .dashboardTable .ant-table-wrapper {
   box-shadow: none;
   border-radius: 8px;
