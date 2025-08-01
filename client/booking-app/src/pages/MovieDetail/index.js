@@ -45,10 +45,8 @@ const MovieDetail = () => {
           setMovie(null);
           setError(response.message || "Failed to fetch movie details.");
         }
-        //  console.log(" Watchlist Persistence Debugging ---");
-        // console.log("fetching watchlist");
+
         const watchlistResponse = await getWatchlist();
-        // console.log("Watchlist API Response:", watchlistResponse);
 
         if (watchlistResponse.success && watchlistResponse.data) {
           const watchlistMovieIds = watchlistResponse.data.map(

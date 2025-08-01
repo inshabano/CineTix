@@ -1,28 +1,26 @@
-// src/pages/Auth/ResetPassword.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { message } from "antd"; // For notifications
-import Loader from "../../components/Loader"; // Your Loader component
-import { resetPasswordWithToken } from "../../services/auth"; // Your auth service
+import { message } from "antd";
+import Loader from "../../components/Loader";
+import { resetPasswordWithToken } from "../../services/auth";
 
-import sharedAuthStyles from "./auth.module.css"; // Or './auth.module.css' if shared
+import sharedAuthStyles from "./auth.module.css";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState(null); // State to store the token from URL
-  const [isTokenValid, setIsTokenValid] = useState(true); // Assume valid until proven otherwise
+  const [token, setToken] = useState(null);
+  const [isTokenValid, setIsTokenValid] = useState(true);
 
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams(); // Hook to get URL query parameters
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const tokenFromUrl = searchParams.get("token");
     if (tokenFromUrl) {
       setToken(tokenFromUrl);
     } else {
-      // No token found in URL, likely an invalid link
       setIsTokenValid(false);
       message.error(
         "No reset token found. Please use the link from your email."
@@ -44,9 +42,8 @@ const ResetPassword = () => {
       message.error("Passwords do not match.");
       return;
     }
-    // Add more password validation (e.g., minimum length, complexity) here if desired
+
     if (newPassword.length < 6) {
-      // Example: min length 6
       message.error("Password must be at least 6 characters long.");
       return;
     }
@@ -59,14 +56,12 @@ const ResetPassword = () => {
           response.message ||
             "Password has been reset successfully. You can now log in."
         );
-        navigate("/login"); // Redirect to login page on success
+        navigate("/login");
       } else {
         message.error(
           response.message || "Failed to reset password. Please try again."
         );
-        // If token is invalid/expired, also invalidate frontend state
         if (response.message.includes("token")) {
-          // Check for common token error messages
           setIsTokenValid(false);
         }
       }
