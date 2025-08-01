@@ -11,7 +11,7 @@ import Loader from "../../components/Loader";
 import mojs from "@mojs/core";
 import $ from "jquery";
 import { message } from "antd";
-import 'react-calendar/dist/Calendar.css';
+
 
 const getLocalFormattedDateString = (date) => {
   const year = date.getFullYear();
