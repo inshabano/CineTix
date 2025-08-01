@@ -29,7 +29,7 @@ const apiLimiter = rateLimit({
 })
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://cinetix-a3z3.onrender.com',
   credentials: true
 }));
 
