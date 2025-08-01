@@ -1,8 +1,9 @@
 import { axiosInstance } from "./axiosinstance";
 
+const API_BASE_URL = 'https://cinetixbackend.onrender.com';
 export const getUserProfile = async () => {
   try {
-    const response = await axiosInstance.get("http://localhost:5000/profile");
+    const response = await axiosInstance.get(`${API_BASE_URL}/profile`);
     return response.data;
   } catch (error) {
     return {
@@ -15,7 +16,7 @@ export const getUserProfile = async () => {
 export const updateProfile = async (profileData) => {
   try {
     const response = await axiosInstance.put(
-      "http://localhost:5000/profile",
+      `${API_BASE_URL}/profile`,
       profileData
     );
     return response.data;

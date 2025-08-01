@@ -2,7 +2,7 @@ const { axiosInstance } = require("./axiosinstance");
 
 export const getAllMovies = async () => {
   try {
-    const response = await axiosInstance.get("http://localhost:5000/movies");
+    const response = await axiosInstance.get("https://cinetixbackend.onrender.com/movies");
     return response.data;
   } catch (err) {
     return err.response;
@@ -12,7 +12,7 @@ export const getAllMovies = async () => {
 export const searchMoviesSuggestions = async (query) => {
   try {
     const response = await axiosInstance.get(
-      `http://localhost:5000/suggestions`,
+      `https://cinetixbackend.onrender.com/suggestions`,
       { params: { query } }
     );
     console.log(response);
@@ -29,7 +29,7 @@ export const searchMoviesSuggestions = async (query) => {
 
 export const searchMovies = async (query) => {
   try {
-    const response = await axiosInstance.get(`http://localhost:5000/search`, {
+    const response = await axiosInstance.get(`https://cinetixbackend.onrender.com/search`, {
       params: { query },
     });
     return response.data;
@@ -48,7 +48,7 @@ export const getMovieData = async (movieid) => {
   console.log(movieid);
   try {
     const response = await axiosInstance.get(
-      `http://localhost:5000/movies/${movieid}`
+      `https://cinetixbackend.onrender.com/movies/${movieid}`
     );
     return response.data;
   } catch (err) {

@@ -3,7 +3,7 @@ import { axiosInstance } from "./axiosinstance";
 export const getBookingDetailsById = async (bookingId) => {
   try {
     const response = await axiosInstance.get(
-      `http://localhost:5000/bookings/${bookingId}`
+      `hhttps://cinetixbackend.onrender.com/bookings/${bookingId}`
     );
     return response.data;
   } catch (error) {
@@ -24,7 +24,7 @@ export const getUserBookings = async () => {
     }
 
     const response = await axiosInstance.get(
-      `http://localhost:5000/mybookings`,
+      `https://cinetixbackend.onrender.com/mybookings`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

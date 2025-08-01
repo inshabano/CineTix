@@ -2,7 +2,7 @@ import axios from "axios";
 import { message } from 'antd';
 
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://cinetixbackend.onrender.com',
   headers: {
     "Content-Type": "application/json",
   },

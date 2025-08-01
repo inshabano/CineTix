@@ -5,7 +5,7 @@
 
 import { axiosInstance } from "./axiosinstance";
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://cinetixbackend.onrender.com';
 
 
 export const getPartnerTheatres = async () => {

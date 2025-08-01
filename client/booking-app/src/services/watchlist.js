@@ -1,8 +1,9 @@
 import { axiosInstance } from "./axiosinstance";
 
+const API_BASE_URL = 'https://cinetixbackend.onrender.com';
 export const getWatchlist = async () => {
   try {
-    const response = await axiosInstance.get("http://localhost:5000/watchlist");
+    const response = await axiosInstance.get(`${API_BASE_URL}/watchlist`);
     return response.data;
   } catch (error) {
     console.error(
@@ -19,7 +20,7 @@ export const getWatchlist = async () => {
 export const addMovieToWatchlist = async (movieId) => {
   try {
     const response = await axiosInstance.post(
-      "http://localhost:5000/watchlist/add",
+      `${API_BASE_URL}/watchlist/add`,
       { movieId }
     );
     return response.data;
@@ -39,7 +40,7 @@ export const addMovieToWatchlist = async (movieId) => {
 export const removeMovieFromWatchlist = async (movieId) => {
   try {
     const response = await axiosInstance.delete(
-      `http://localhost:5000/watchlist/remove/${movieId}`
+      `${API_BASE_URL}/watchlist/remove/${movieId}`
     );
     return response.data;
   } catch (error) {

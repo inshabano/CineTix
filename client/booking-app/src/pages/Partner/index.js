@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import Loader from "../../components/Loader";
+import 'react-calendar/dist/Calendar.css';
 
 import {
   getPartnerTheatres,
