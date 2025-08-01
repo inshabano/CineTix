@@ -2,11 +2,15 @@ const { default: mongoose } = require("mongoose");
 const movieModel = require("../models/movie.model");
 const showModel = require("../models/show.model");
 const theatreModel = require("../models/theatre.model");
+const moment = require('moment'); 
 
 const createTestShows = async (req, res) => {
   try {
     const movies = await movieModel.find({});
-    const theatre = await theatreModel.findOne({});
+    const randomTheatre = await theatreModel.aggregate([
+      { $sample: { size: 1 } }
+    ]);
+    const theatre = randomTheatre[0];
 
     if (movies.length === 0) {
       return res
@@ -148,10 +152,8 @@ const getTheatresAndShowsByMovie = async (req, res) => {
 
     const filter = { movie: movieid };
     if (date) {
-      const selectedDate = new Date(date);
-      selectedDate.setUTCHours(0, 0, 0, 0);
-      const nextDay = new Date(selectedDate);
-      nextDay.setUTCDate(selectedDate.getUTCDate() + 1);
+      const selectedDate = moment(date).startOf('day').toDate();
+      const nextDay = moment(date).endOf('day').toDate();
 
       filter.showDate = {
         $gte: selectedDate,
@@ -282,15 +284,9 @@ const updateShow = async (req, res) => {
     }
 };
 
-// src/controllers/show.controller.js (Add this function)
-// ... (existing imports and functions) ...
-
 const deleteShow = async (req, res) => {
     try {
         const showId = req.params.id;
-
-        // Ownership check is done by verifyShowOwnership middleware
-
         const deletedShow = await showModel.findByIdAndDelete(showId);
 
         if (!deletedShow) {

@@ -64,8 +64,14 @@ const TheatresShowsPage = () => {
           movieid,
           formattedDate
         );
+
         if (showsResponse && showsResponse.success) {
           setTheatres(showsResponse.data);
+          if (showsResponse.data.length === 0) {
+            setError("No shows available for this movie on this date.");
+          } else {
+            setError(null);
+          }
         } else {
           setError(
             showsResponse?.message || "Failed to load theatres and showtimes."

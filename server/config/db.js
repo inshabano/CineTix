@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
 const connectDB = () => {
+  const DB_URL = process.env.DB_URL;
   mongoose
+  
     .connect(
-      "mongodb+srv://inshabano88158:inshabano@cluster0.w3ijr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      DB_URL
     )
     .then(() => {
       console.log("Connected to DB successfully");

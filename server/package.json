@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -25,7 +26,8 @@
     "debug": "^4.4.1",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
-    "express-rate-limit": "^7.5.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.5.1",
     "fill-range": "^7.1.1",
     "glob-parent": "^5.1.2",
     "has-flag": "^3.0.0",

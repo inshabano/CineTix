@@ -15,10 +15,18 @@ const watchlistRoutes = require('./routes/watchlist.routes');
 const adminRoutes = require('./routes/admin.routes')
 const { createTestShows } = require('./controllers/show.controller');
 const { userModel } = require('./models/user.model');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 
 connectDB();
+
+const apiLimiter = rateLimit({
+    windowMs:5*60*1000,
+    max:50,
+    message: "Too many request from this IP, please try again in 3 min"
+})
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -26,6 +34,14 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
+app.use(apiLimiter);
+
+app.use((req, res, next) => {
+  if (req.body) {
+    mongoSanitize.sanitize(req.body);
+  }
+  next();
+});
 
 userRoutes(app);
 movieRoutes(app);
