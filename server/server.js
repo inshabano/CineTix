@@ -12,7 +12,7 @@ const bookingRoutes = require("./routes/booking.routes");
 const paymentRoutes = require('./routes/payment.routes');
 const deleteOldShows = require('./utils/deletePastShows');
 const watchlistRoutes = require('./routes/watchlist.routes');
-const adminRoutes = require('./routes/admin.routes');
+const adminRoutes = require('./routes/admin.routes')
 const { createTestShows } = require('./controllers/show.controller');
 const { userModel } = require('./models/user.model');
 const rateLimit = require('express-rate-limit');
@@ -23,25 +23,25 @@ const app = express();
 connectDB();
 
 const apiLimiter = rateLimit({
-    windowMs: 5 * 60 * 1000,
-    max: 50,
-    message: "Too many requests from this IP, please try again in 3 min"
-});
-
-app.use(
-    mongoSanitize({
-        replaceWith: '_',
-    }),
-);
-
-app.use(bodyParser.json());
+    windowMs:5*60*1000,
+    max:50,
+    message: "Too many request from this IP, please try again in 3 min"
+})
 
 app.use(cors({
-    origin: 'https://cinetix-a3z3.onrender.com',
-    credentials: true
+  origin: 'https://cinetix-a3z3.onrender.com/',
+  credentials: true
 }));
 
+app.use(bodyParser.json());
 app.use(apiLimiter);
+
+// app.use((req, res, next) => {
+//   if (req.body) {
+//     mongoSanitize.sanitize(req.body);
+//   }
+//   next();
+// });
 
 userRoutes(app);
 movieRoutes(app);
@@ -116,6 +116,6 @@ cron.schedule('0 0 * * *', () => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, async () => {
-    console.log(` Server is running successfully on port: ${port}`);
-    await initializeAdminUserId();
+  console.log(` Server is running successfully on port: ${port}`);
+  await initializeAdminUserId();
 });
