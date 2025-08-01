@@ -1,5 +1,5 @@
 const { userModel } = require("../models/user.model");
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 
@@ -83,6 +83,7 @@ const onLogin = async (req, res) => {
       username: existingUser.username,
     });
   } catch (err) {
+    console.error("Login error:", err);
     return res
       .status(500)
       .send({ message: "Something went wrong! Please try again." });
