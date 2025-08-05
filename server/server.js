@@ -34,14 +34,15 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  if (req.body) {
+    mongoSanitize.sanitize(req.body);
+  }
+  next();
+});
 app.use(apiLimiter);
 
-// app.use((req, res, next) => {
-//   if (req.body) {
-//     mongoSanitize.sanitize(req.body);
-//   }
-//   next();
-// });
+
 
 userRoutes(app);
 movieRoutes(app);
