@@ -2,32 +2,89 @@ const { default: mongoose } = require("mongoose");
 const movieModel = require("../models/movie.model");
 const showModel = require("../models/show.model");
 const theatreModel = require("../models/theatre.model");
-const moment = require('moment'); 
+const moment = require("moment");
 
 const createTestShows = async (req, res) => {
   try {
-    const movies = await movieModel.find({});
-    const randomTheatre = await theatreModel.aggregate([
-      { $sample: { size: 1 } }
+    let movies = await movieModel.find({});
+    let randomTheatre = await theatreModel.aggregate([
+      { $sample: { size: 1 } },
     ]);
-    const theatre = randomTheatre[0];
+    let theatre = randomTheatre[0];
 
-    if (movies.length === 0) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "No movies found in DB to create shows for.",
+    console.log(
+      "[createTestShows] Initial check: Movies found:",
+      movies.length
+    );
+    console.log("[createTestShows] Initial check: Theatre sampled:", !!theatre);
+
+    if (!theatre) {
+      console.warn(
+        "[createTestShows] No theatres found. Attempting to create a default test theatre."
+      );
+      let adminUserForTheatre;
+      try {
+        adminUserForTheatre = await userModel
+          .findOne({ userType: "admin" })
+          .select("_id");
+        console.log(
+          "[createTestShows] Admin user for theatre creation:",
+          !!adminUserForTheatre
+        );
+      } catch (adminUserError) {
+        console.error(
+          "[createTestShows] ERROR finding admin user for default theatre:",
+          adminUserError
+        );
+        return res
+          .status(500)
+          .json({
+            success: false,
+            message:
+              "Server error: Failed to find admin user for default theatre.",
+          });
+      }
+
+      if (!adminUserForTheatre) {
+        console.error(
+          "[createTestShows] Cannot create default theatre: No admin user found to assign as owner."
+        );
+        return res
+          .status(500)
+          .json({
+            success: false,
+            message:
+              "Server error: No admin user available to create default theatre.",
+          });
+      }
+
+      try {
+        const defaultTheatre = await theatreModel.create({
+          name: "Default Test Cinema",
+          address: "123 Test Street, Demo City",
+          email: "default.cinema@test.com",
+          phone: 1112223333,
+          owner: adminUserForTheatre._id,
         });
+        theatre = defaultTheatre;
+        console.log(
+          "[createTestShows] Default theatre created successfully:",
+          defaultTheatre._id
+        );
+      } catch (theatreCreateError) {
+        console.error(
+          "[createTestShows] ERROR creating default theatre:",
+          theatreCreateError
+        );
+        return res
+          .status(500)
+          .json({
+            success: false,
+            message: "Server error: Failed to create default theatre.",
+          });
+      }
     }
-    if (theatre.length === 0) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "No theatres found in DB to create shows for.",
-        });
-    }
+
     const commonShowTimes = ["10:00 AM", "04:00 PM", "10:00 PM"];
     const daysToCreate = 5;
     const defaultTotalSeats = 150;
@@ -37,36 +94,36 @@ const createTestShows = async (req, res) => {
     const existingShowsSkipped = [];
 
     for (const movie of movies) {
-        for (let i = 0; i < daysToCreate; i++) {
-          const showDate = new Date();
-          showDate.setDate(showDate.getDate() + i);
-          showDate.setHours(0, 0, 0, 0);
+      for (let i = 0; i < daysToCreate; i++) {
+        const showDate = new Date();
+        showDate.setDate(showDate.getDate() + i);
+        showDate.setHours(0, 0, 0, 0);
 
-          for (const time of commonShowTimes) {
-            const existingShow = await showModel.findOne({
+        for (const time of commonShowTimes) {
+          const existingShow = await showModel.findOne({
+            movie: movie._id,
+            theatre: theatre._id,
+            showDate: showDate,
+            showTime: time,
+          });
+
+          if (!existingShow) {
+            const newShow = new showModel({
               movie: movie._id,
               theatre: theatre._id,
               showDate: showDate,
               showTime: time,
+              totalSeats: defaultTotalSeats,
+              bookedSeats: [],
+              ticketPrice: defaultTicketPrice,
             });
-
-            if (!existingShow) {
-              const newShow = new showModel({
-                movie: movie._id,
-                theatre: theatre._id,
-                showDate: showDate,
-                showTime: time,
-                totalSeats: defaultTotalSeats,
-                bookedSeats: [],
-                ticketPrice: defaultTicketPrice,
-              });
-              await newShow.save();
-              allShowsCreated.push(newShow._id);
-            } else {
-              existingShowsSkipped.push(existingShow._id);
-            }
+            await newShow.save();
+            allShowsCreated.push(newShow._id);
+          } else {
+            existingShowsSkipped.push(existingShow._id);
           }
         }
+      }
     }
 
     res.status(200).json({
@@ -77,12 +134,10 @@ const createTestShows = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in createTestShows:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error: Failed to automate show creation.",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Server error: Failed to automate show creation.",
+    });
   }
 };
 
@@ -103,8 +158,14 @@ const createShow = async (req, res) => {
         .status(400)
         .send({ success: false, message: "Please enter correct Movie ID" });
     }
-    if (userType === 'partner' && getTheatre.owner.toString() !== userId.toString()) {
-      return res.status(403).send({ success: false, message: "Access Denied: You do not own this theatre." });
+    if (
+      userType === "partner" &&
+      getTheatre.owner.toString() !== userId.toString()
+    ) {
+      return res.status(403).send({
+        success: false,
+        message: "Access Denied: You do not own this theatre.",
+      });
     }
 
     const newShow = new showModel(req.body);
@@ -152,8 +213,8 @@ const getTheatresAndShowsByMovie = async (req, res) => {
 
     const filter = { movie: movieid };
     if (date) {
-      const selectedDate = moment(date).startOf('day').toDate();
-      const nextDay = moment(date).endOf('day').toDate();
+      const selectedDate = moment(date).startOf("day").toDate();
+      const nextDay = moment(date).endOf("day").toDate();
 
       filter.showDate = {
         $gte: selectedDate,
@@ -194,12 +255,10 @@ const getTheatresAndShowsByMovie = async (req, res) => {
     });
   } catch (err) {
     console.error("Error in getTheatresAndShowsByMovie:", err);
-    return res
-      .status(500)
-      .send({
-        success: false,
-        message: "Something went wrong. Please try again.",
-      });
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
   }
 };
 
@@ -229,79 +288,96 @@ const getShowDetailsByShowId = async (req, res) => {
     });
   } catch (err) {
     console.error("Error in getting show details:", err);
-    return res
-      .status(500)
-      .send({
-        success: false,
-        message: "Something went wrong. Please try again.",
-      });
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
   }
 };
 
 const getMyTheatreShows = async (req, res) => {
-    try {
-        const ownerId = req.userDetails._id;
-        const myTheatres = await theatreModel.find({ owner: ownerId }).select('_id');
-        const myTheatreIds = myTheatres.map(theatre => theatre._id);
+  try {
+    const ownerId = req.userDetails._id;
+    const myTheatres = await theatreModel
+      .find({ owner: ownerId })
+      .select("_id");
+    const myTheatreIds = myTheatres.map((theatre) => theatre._id);
 
-        if (myTheatreIds.length === 0) {
-            return res.status(200).send({ success: true, message: "No theatres found for this partner, hence no shows.", data: [] });
-        }
-        const myShows = await showModel.find({ theatre: { $in: myTheatreIds } }).populate('movie').populate('theatre');
-
-        return res.status(200).send({
-            success: true,
-            message: "My theatre shows fetched successfully.",
-            data: myShows,
-        });
-    } catch (err) {
-        console.error("Error fetching my theatre shows:", err);
-        return res.status(500).send({ message: "Something went wrong. Please try again." });
+    if (myTheatreIds.length === 0) {
+      return res.status(200).send({
+        success: true,
+        message: "No theatres found for this partner, hence no shows.",
+        data: [],
+      });
     }
+    const myShows = await showModel
+      .find({ theatre: { $in: myTheatreIds } })
+      .populate("movie")
+      .populate("theatre");
+
+    return res.status(200).send({
+      success: true,
+      message: "My theatre shows fetched successfully.",
+      data: myShows,
+    });
+  } catch (err) {
+    console.error("Error fetching my theatre shows:", err);
+    return res
+      .status(500)
+      .send({ message: "Something went wrong. Please try again." });
+  }
 };
 
 const updateShow = async (req, res) => {
-    try {
-        const showId = req.params.id;
-        const updates = req.body;
-        const updatedShow = await showModel.findByIdAndUpdate(
-            showId,
-            { $set: updates },
-            { new: true, runValidators: true }
-        );
+  try {
+    const showId = req.params.id;
+    const updates = req.body;
+    const updatedShow = await showModel.findByIdAndUpdate(
+      showId,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
 
-        if (!updatedShow) {
-            return res.status(404).send({ success: false, message: "Show not found." });
-        }
-        return res.status(200).send({
-            success: true,
-            message: "Show updated successfully.",
-            data: updatedShow,
-        });
-    } catch (err) {
-        console.error("Error updating show:", err);
-        return res.status(500).send({ message: "Something went wrong. Please try again." });
+    if (!updatedShow) {
+      return res
+        .status(404)
+        .send({ success: false, message: "Show not found." });
     }
+    return res.status(200).send({
+      success: true,
+      message: "Show updated successfully.",
+      data: updatedShow,
+    });
+  } catch (err) {
+    console.error("Error updating show:", err);
+    return res
+      .status(500)
+      .send({ message: "Something went wrong. Please try again." });
+  }
 };
 
 const deleteShow = async (req, res) => {
-    try {
-        const showId = req.params.id;
-        const deletedShow = await showModel.findByIdAndDelete(showId);
+  try {
+    const showId = req.params.id;
+    const deletedShow = await showModel.findByIdAndDelete(showId);
 
-        if (!deletedShow) {
-            return res.status(404).send({ success: false, message: "Show not found." });
-        }
-
-        return res.status(200).send({
-            success: true,
-            message: "Show deleted successfully.",
-            data: deletedShow,
-        });
-    } catch (err) {
-        console.error("Error deleting show:", err);
-        return res.status(500).send({ message: "Something went wrong. Please try again." });
+    if (!deletedShow) {
+      return res
+        .status(404)
+        .send({ success: false, message: "Show not found." });
     }
+
+    return res.status(200).send({
+      success: true,
+      message: "Show deleted successfully.",
+      data: deletedShow,
+    });
+  } catch (err) {
+    console.error("Error deleting show:", err);
+    return res
+      .status(500)
+      .send({ message: "Something went wrong. Please try again." });
+  }
 };
 
 module.exports = {

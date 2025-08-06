@@ -67,11 +67,8 @@ const TheatresShowsPage = () => {
 
         if (showsResponse && showsResponse.success) {
           setTheatres(showsResponse.data);
-          if (showsResponse.data.length === 0) {
-            setError("No shows available for this movie on this date.");
-          } else {
-            setError(null);
-          }
+
+          setError(null);
         } else {
           setError(
             showsResponse?.message || "Failed to load theatres and showtimes."
@@ -80,7 +77,9 @@ const TheatresShowsPage = () => {
         }
       } catch (err) {
         console.error("Error fetching data:", err);
-        setError("An error occurred while fetching data. Please try again.");
+        setError(
+          "An unexpected error occurred while fetching data. Please try again."
+        );
         setTheatres([]);
       } finally {
         const minLoaderTime = 500;
@@ -126,7 +125,7 @@ const TheatresShowsPage = () => {
     return <Loader />;
   }
 
-  if (error) {
+  if (error && theatres.length === 0) {
     return (
       <>
         <div className={styles.errorMessage}>Error: {error}</div>
@@ -187,6 +186,7 @@ const TheatresShowsPage = () => {
       </div>
 
       <div className={styles.theatreList}>
+        {/* This condition correctly displays the "No shows available" message */}
         {theatres.length === 0 ? (
           <p className={styles.noShowsMessage}>
             No shows available for {movieDetails?.movieName || "this movie"} on{" "}
