@@ -70,7 +70,7 @@ const initializeAdminUserId = async () => {
     }
 };
 
-cron.schedule('0 22 * * *', async () => { 
+cron.schedule('16 6 * * *', async () => { 
     console.log(`[Cron Job] Triggered at ${new Date()}`);
     console.log('[Cron Job] Running daily task: Creating test shows for all movies and theatres...');
     if (!adminUserId) {
@@ -107,7 +107,7 @@ cron.schedule('0 22 * * *', async () => {
     timezone: "Asia/Kolkata" 
 });
 
-cron.schedule('0 22 * * *', () => {
+cron.schedule('16 6 * * *', () => {
     console.log('Running scheduled job: Deleting past shows...');
     deleteOldShows();
 }, {
