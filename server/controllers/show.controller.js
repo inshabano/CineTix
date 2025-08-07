@@ -6,11 +6,11 @@ const moment = require("moment");
 
 const createTestShows = async (req, res) => {
   try {
-    let movies = await movieModel.find({});
-    let randomTheatre = await theatreModel.aggregate([
+    const movies = await movieModel.find({});
+    const randomTheatre = await theatreModel.aggregate([
       { $sample: { size: 1 } },
     ]);
-    let theatre = randomTheatre[0];
+    const theatre = randomTheatre[0];
 
     console.log(
       "[createTestShows] Initial check: Movies found:",
@@ -18,71 +18,18 @@ const createTestShows = async (req, res) => {
     );
     console.log("[createTestShows] Initial check: Theatre sampled:", !!theatre);
 
+    if (movies.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No movies found in DB to create shows for.",
+      });
+    }
+
     if (!theatre) {
-      console.warn(
-        "[createTestShows] No theatres found. Attempting to create a default test theatre."
-      );
-      let adminUserForTheatre;
-      try {
-        adminUserForTheatre = await userModel
-          .findOne({ userType: "admin" })
-          .select("_id");
-        console.log(
-          "[createTestShows] Admin user for theatre creation:",
-          !!adminUserForTheatre
-        );
-      } catch (adminUserError) {
-        console.error(
-          "[createTestShows] ERROR finding admin user for default theatre:",
-          adminUserError
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            message:
-              "Server error: Failed to find admin user for default theatre.",
-          });
-      }
-
-      if (!adminUserForTheatre) {
-        console.error(
-          "[createTestShows] Cannot create default theatre: No admin user found to assign as owner."
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            message:
-              "Server error: No admin user available to create default theatre.",
-          });
-      }
-
-      try {
-        const defaultTheatre = await theatreModel.create({
-          name: "Default Test Cinema",
-          address: "123 Test Street, Demo City",
-          email: "default.cinema@test.com",
-          phone: 1112223333,
-          owner: adminUserForTheatre._id,
-        });
-        theatre = defaultTheatre;
-        console.log(
-          "[createTestShows] Default theatre created successfully:",
-          defaultTheatre._id
-        );
-      } catch (theatreCreateError) {
-        console.error(
-          "[createTestShows] ERROR creating default theatre:",
-          theatreCreateError
-        );
-        return res
-          .status(500)
-          .json({
-            success: false,
-            message: "Server error: Failed to create default theatre.",
-          });
-      }
+      return res.status(404).json({
+        success: false,
+        message: "No theatres found in DB to create shows for.",
+      });
     }
 
     const commonShowTimes = ["10:00 AM", "04:00 PM", "10:00 PM"];
