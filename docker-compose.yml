@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.backend
+    container_name: cinetix_backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    # environment:
+    #   - MONGODB_URI=${DB_URL}
+    #   - SECRET_KEY=${Secret_Key}
+    depends_on:
+      - mongodb
+    volumes:
+      - ./server:/app
+
+  frontend:
+    build:
+      context: ./client/booking-app
+      dockerfile: Dockerfile.frontend
+    container_name: cinetix_frontend
+    ports:
+      - "3000:80"
+    # volumes:
+    #   - ./client:/app
+    depends_on:
+      - backend
+
+  mongodb:
+    image: mongo:latest
+    container_name: cinetix_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
