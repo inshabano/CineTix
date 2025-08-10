@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKERHUB_USERNAME = 'your-dockerhub-username'
+        DOCKERHUB_USERNAME = 'inshabano'
         DOCKERHUB_REPO = 'cinetix'
     }
 
