@@ -16,22 +16,21 @@ pipeline {
         }
 
         stage('Build Frontend') {
-                docker.image('docker:latest').inside {
-                    dir('client/booking-app') {
-                        sh "docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-frontend:latest -f Dockerfile.frontend ."
-                    }
+            steps {
+                echo 'Building frontend Docker image...'
+                dir('client') {
+                    sh 'docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-frontend:latest -f Dockerfile.frontend .'
                 }
-            } 
+            }
         }
         
         stage('Build Backend') {
-            steps { 
-                docker.image('docker:latest').inside {
-                    dir('server') {
-                        sh "docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-backend:latest -f Dockerfile.backend ."
-                    }
+            steps {
+                echo 'Building backend Docker image...'
+                dir('server') {
+                    sh 'docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-backend:latest -f Dockerfile.backend .'
                 }
-            } 
+            }
         }
 
         stage('Push Images to Docker Hub') {
