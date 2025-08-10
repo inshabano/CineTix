@@ -18,7 +18,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 echo 'Building frontend Docker image...'
-                dir('client') {
+                dir('client/booking-app') {
                     sh 'docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-frontend:latest -f Dockerfile.frontend .'
                 }
             }
