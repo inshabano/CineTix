@@ -1,5 +1,13 @@
 const movieModel = require("../models/movie.model");
 const mongoose = require("mongoose");
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION // e.g., 'us-east-1'
+});
+const s3 = new AWS.S3();
 
 const getAllMovies = async (req, res) => {
   try {
@@ -50,25 +58,38 @@ const getMovieById = async (req, res) => {
 };
 
 const addMovie = async (req, res) => {
-  try {
-    const newMovie = new movieModel(req.body);
-    const savedMovie = await newMovie.save();
+    try {
+        const { posterData, ...movieDetails } = req.body;
+      
+        const key = `posters/${Date.now()}_${movieDetails.movieName.replace(/\s/g, '_')}.jpg`;
+        
+        const params = {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: key,
+            Body: Buffer.from(posterData.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
+            ContentType: 'image/jpeg',
+            ACL: 'public-read' 
+        };
 
-    return res.status(201).json({
-      success: true,
-      message: "New movie added successfully",
-      data: savedMovie,
-    });
-  } catch (err) {
-    console.error("Error adding movie:", err);
-    return res.status(500).json({
-      success: false,
-      message: "Something went wrong! Please try again.",
-      error: err.message,
-    });
-  }
+        const uploadResult = await s3.upload(params).promise();
+        const posterUrl = uploadResult.Location; 
+        const newMovie = new movieModel({ ...movieDetails, poster: posterUrl });
+        const savedMovie = await newMovie.save();
+
+        return res.status(201).json({
+            success: true,
+            message: "New movie added successfully",
+            data: savedMovie,
+        });
+    } catch (err) {
+        console.error("Error adding movie:", err);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong! Please try again.",
+            error: err.message,
+        });
+    }
 };
-
 
 const deleteMovieByID = async (req, res) => {
   try {
