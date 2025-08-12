@@ -28,9 +28,24 @@ const apiLimiter = rateLimit({
     message: "Too many request from this IP, please try again in 3 min"
 })
 
+// app.use(cors({
+//   origin: 'https://cinetix-a3z3.onrender.com',
+//   credentials: true
+// }));
+
+const allowedOrigins = [
+  'https://app.inshabano.live',
+  'https://cinetix-a3z3.onrender.com'
+];
+
 app.use(cors({
-  origin: 'https://cinetix-a3z3.onrender.com',
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 app.use(bodyParser.json());
