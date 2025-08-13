@@ -2,9 +2,9 @@ pipeline {
     agent any
     
     environment {
-        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
-        DOCKERHUB_USERNAME = 'inshabano'
-        DOCKERHUB_REPO = 'cinetix'
+        // DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
+        // DOCKERHUB_USERNAME = 'inshabano'
+        // DOCKERHUB_REPO = 'cinetix'
         AWS_CREDENTIALS_ID = 'aws-credentials' 
         AWS_REGION = 'us-east-1' 
         ECR_BACKEND_REPO = 'cinetix-backend'
@@ -23,10 +23,10 @@ pipeline {
             }
         }
 
-         stage('Build Frontend') {
+        stage('Build Frontend') {
             steps {
                 echo 'Building frontend Docker image...'
-                dir('client/booking-app') {
+                dir('client/booking-app') { 
                     sh 'docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_FRONTEND_REPO}:latest -f Dockerfile.frontend .'
                 }
             }
@@ -45,8 +45,6 @@ pipeline {
             steps {
                 echo 'Logging in to ECR and pushing images...'
                 withCredentials([usernamePassword(credentialsId: AWS_CREDENTIALS_ID, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    echo "AWS Account ID: ${AWS_ACCOUNT_ID}"
-                    echo "AWS Region: ${AWS_REGION}"
                     sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                     sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_FRONTEND_REPO}:latest"
                     sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_BACKEND_REPO}:latest"
