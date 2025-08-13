@@ -1,8 +1,10 @@
 import axios from "axios";
 import { message } from 'antd';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export const axiosInstance = axios.create({
-  baseURL: 'https://cinetixbackend.onrender.com',
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

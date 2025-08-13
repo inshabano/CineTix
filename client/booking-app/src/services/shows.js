@@ -1,6 +1,6 @@
 const { axiosInstance } = require("./axiosinstance");
 
-const API_BASE_URL = 'https://cinetixbackend.onrender.com';
+const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getShowData = async (movieId, date) => {
   try {
     const response = await axiosInstance.get(

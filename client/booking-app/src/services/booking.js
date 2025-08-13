@@ -1,9 +1,10 @@
 import { axiosInstance } from "./axiosinstance";
 
+const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getBookingDetailsById = async (bookingId) => {
   try {
     const response = await axiosInstance.get(
-      `hhttps://cinetixbackend.onrender.com/bookings/${bookingId}`
+      `${API_BASE_URL}/bookings/${bookingId}`
     );
     return response.data;
   } catch (error) {
@@ -24,7 +25,7 @@ export const getUserBookings = async () => {
     }
 
     const response = await axiosInstance.get(
-      `https://cinetixbackend.onrender.com/mybookings`,
+      `${API_BASE_URL}/mybookings`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -5,6 +5,14 @@ pipeline {
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
         DOCKERHUB_USERNAME = 'inshabano'
         DOCKERHUB_REPO = 'cinetix'
+        AWS_CREDENTIALS_ID = 'aws-credentials' 
+        AWS_REGION = 'us-east-1' 
+        ECR_BACKEND_REPO = 'cinetix-backend'
+        ECR_FRONTEND_REPO = 'cinetix-frontend'
+        ECS_CLUSTER_NAME = 'CineTix-ECS-Cluster' 
+        ECS_BACKEND_SERVICE = 'cinetix-backend-service' 
+        ECS_FRONTEND_SERVICE = 'cinetix-frontend-service'
+        AWS_ACCOUNT_ID=536697262126
     }
 
     stages {
@@ -15,11 +23,11 @@ pipeline {
             }
         }
 
-        stage('Build Frontend') {
+         stage('Build Frontend') {
             steps {
                 echo 'Building frontend Docker image...'
-                dir('client/booking-app') {
-                    sh 'docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-frontend:latest -f Dockerfile.frontend .'
+                dir('client') {
+                    sh 'docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_FRONTEND_REPO}:latest -f Dockerfile.frontend .'
                 }
             }
         }
@@ -28,26 +36,31 @@ pipeline {
             steps {
                 echo 'Building backend Docker image...'
                 dir('server') {
-                    sh 'docker build -t ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-backend:latest -f Dockerfile.backend .'
+                    sh 'docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_BACKEND_REPO}:latest -f Dockerfile.backend .'
                 }
             }
         }
 
-        stage('Push Images to Docker Hub') {
+        stage('Push Images to ECR') {
             steps {
-                echo 'Logging in to Docker Hub and pushing images...'
-                withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    sh "docker push ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-frontend:latest"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}-backend:latest"
+                echo 'Logging in to ECR and pushing images...'
+                withCredentials([usernamePassword(credentialsId: AWS_CREDENTIALS_ID, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_FRONTEND_REPO}:latest"
+                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_BACKEND_REPO}:latest"
                 }
             }
         }
 
         stage('Deploy to AWS') {
             steps {
-                echo 'Triggering deployment on AWS...'
-                echo 'Deployment step is a placeholder for AWS CLI commands.'
+                echo 'Deploying to AWS...'
+                withAWS(credentialsId: AWS_CREDENTIALS_ID, region: AWS_REGION) {
+                    sh """
+                        aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_BACKEND_SERVICE} --force-new-deployment
+                        aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_FRONTEND_SERVICE} --force-new-deployment
+                    """
+                }
             }
         }
     }
