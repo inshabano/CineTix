@@ -26,7 +26,7 @@ pipeline {
          stage('Build Frontend') {
             steps {
                 echo 'Building frontend Docker image...'
-                dir('client') {
+                dir('client/booking-app') {
                     sh 'docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_FRONTEND_REPO}:latest -f Dockerfile.frontend .'
                 }
             }
