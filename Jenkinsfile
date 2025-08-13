@@ -12,7 +12,7 @@ pipeline {
         ECS_CLUSTER_NAME = 'CineTix-ECS-Cluster' 
         ECS_BACKEND_SERVICE = 'cinetix-backend-service' 
         ECS_FRONTEND_SERVICE = 'cinetix-frontend-service'
-        AWS_ACCOUNT_ID=536697262126
+        AWS_ACCOUNT_ID='536697262126'
     }
 
     stages {
