@@ -33,6 +33,10 @@ const apiLimiter = rateLimit({
 //   credentials: true
 // }));
 
+app.get('/', (req, res) => {
+  res.status(200).send('Hello world');
+}); 
+
 const allowedOrigins = [
   'https://app.inshabano.live',
   'https://cinetix-a3z3.onrender.com'
