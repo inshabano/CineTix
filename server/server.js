@@ -33,9 +33,9 @@ const apiLimiter = rateLimit({
 //   credentials: true
 // }));
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello world');
-}); 
+app.get('/health', (req, res) => {
+  res.status(200).send('Healthy');
+});
 
 const allowedOrigins = [
   'https://app.inshabano.live',
