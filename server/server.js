@@ -38,7 +38,7 @@ app.get('/health', (req, res) => {
 });
 
 const allowedOrigins = [
-  'https://app.inshabano.live',
+  'https://cinetix.inshabano.live',
   'https://cinetix-a3z3.onrender.com'
 ];
 
