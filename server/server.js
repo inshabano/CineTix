@@ -135,7 +135,7 @@ cron.schedule('16 6 * * *', () => {
 });
 
 const port = process.env.PORT || 5000;
-app.listen(port, async () => {
+app.listen(port, '0.0.0.0', async () => {
   console.log(` Server is running successfully on port: ${port}`);
   await initializeAdminUserId();
 });
