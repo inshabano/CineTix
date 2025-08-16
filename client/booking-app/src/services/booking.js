@@ -1,10 +1,9 @@
 import { axiosInstance } from "./axiosinstance";
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getBookingDetailsById = async (bookingId) => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/bookings/${bookingId}`
+      `/bookings/${bookingId}`
     );
     return response.data;
   } catch (error) {
@@ -25,7 +24,7 @@ export const getUserBookings = async () => {
     }
 
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/mybookings`,
+      `/mybookings`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,9 +1,9 @@
 import { axiosInstance } from "./axiosinstance";
-const API_BASE_URL = axiosInstance.defaults.baseURL;
+
 export const createRazorpayOrder = async (showId, seats) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/razorpay/order`,
+      `/razorpay/order`,
       { showId, seats }
     );
     return response.data;
@@ -20,7 +20,7 @@ export const createRazorpayOrder = async (showId, seats) => {
 export const verifyRazorpayPayment = async (paymentData) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/razorpay/verify`,
+      `/razorpay/verify`,
       paymentData
     );
     return response.data;
@@ -36,7 +36,7 @@ export const verifyRazorpayPayment = async (paymentData) => {
 export const createFinalBooking = async (bookingId, razorpayPaymentId) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/bookings`,
+      `/bookings`,
       {
         bookingId: bookingId,
         razorpayPaymentId: razorpayPaymentId,

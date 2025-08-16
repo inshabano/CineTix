@@ -1,10 +1,9 @@
 const { axiosInstance } = require("./axiosinstance");
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getShowData = async (movieId, date) => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/shows/movies/${movieId}?date=${date}`
+      `/shows/movies/${movieId}?date=${date}`
     );
     return response.data;
   } catch (error) {
@@ -21,7 +20,7 @@ export const getShowData = async (movieId, date) => {
 export const getTheatresAndShowtimes = async (movieId, date) => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/shows/movies/${movieId}?date=${date}`
+      `/shows/movies/${movieId}?date=${date}`
     );
     return response.data;
   } catch (error) {
@@ -39,7 +38,7 @@ export const getTheatresAndShowtimes = async (movieId, date) => {
 export const getShowDetails = async (showid) => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/shows/${showid}`
+      `/shows/${showid}`
     );
     return response.data;
   } catch (error) {

@@ -1,9 +1,8 @@
 import { axiosInstance } from "./axiosinstance";
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getUserProfile = async () => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/profile`);
+    const response = await axiosInstance.get(`/profile`);
     return response.data;
   } catch (error) {
     return {
@@ -16,7 +15,7 @@ export const getUserProfile = async () => {
 export const updateProfile = async (profileData) => {
   try {
     const response = await axiosInstance.put(
-      `${API_BASE_URL}/profile`,
+      `/profile`,
       profileData
     );
     return response.data;

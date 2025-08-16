@@ -1,10 +1,9 @@
 import { axiosInstance } from "./axiosinstance";
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getPartnerTheatres = async () => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/theatres/my-theatres`
+      `/theatres/my-theatres`
     );
     return response.data;
   } catch (error) {
@@ -23,7 +22,7 @@ export const getPartnerTheatres = async () => {
 export const updatePartnerTheatre = async (theatreId, updateData) => {
   try {
     const response = await axiosInstance.put(
-      `${API_BASE_URL}/theatres/${theatreId}`,
+      `/theatres/${theatreId}`,
       updateData
     );
     return response.data;
@@ -42,7 +41,7 @@ export const updatePartnerTheatre = async (theatreId, updateData) => {
 export const deletePartnerTheatre = async (theatreId) => {
   try {
     const response = await axiosInstance.delete(
-      `${API_BASE_URL}/theatres/${theatreId}`
+      `/theatres/${theatreId}`
     );
     return response.data;
   } catch (error) {
@@ -61,7 +60,7 @@ export const deletePartnerTheatre = async (theatreId) => {
 export const getPartnerTheatreShows = async () => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/shows/my-theatre-shows`
+      `/shows/my-theatre-shows`
     );
     return response.data;
   } catch (error) {
@@ -79,7 +78,7 @@ export const getPartnerTheatreShows = async () => {
 export const createPartnerShow = async (showData) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/shows`,
+      `/shows`,
       showData
     );
     return response.data;
@@ -98,7 +97,7 @@ export const createPartnerShow = async (showData) => {
 export const updatePartnerShow = async (showId, updateData) => {
   try {
     const response = await axiosInstance.put(
-      `${API_BASE_URL}/shows/${showId}`,
+      `/shows/${showId}`,
       updateData
     );
     return response.data;
@@ -117,7 +116,7 @@ export const updatePartnerShow = async (showId, updateData) => {
 export const deletePartnerShow = async (showId) => {
   try {
     const response = await axiosInstance.delete(
-      `${API_BASE_URL}/shows/${showId}`
+      `/shows/${showId}`
     );
     return response.data;
   } catch (error) {
@@ -136,7 +135,7 @@ export const deletePartnerShow = async (showId) => {
 export const getPartnerTheatreBookings = async () => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/bookings/my-theatres`
+      `/bookings/my-theatres`
     );
     return response.data;
   } catch (error) {
@@ -157,7 +156,7 @@ export const getPartnerTheatreBookings = async () => {
 export const getAllMoviesForSelection = async () => {
   try {
     
-    const response = await axiosInstance.get(`${API_BASE_URL}/movies`);
+    const response = await axiosInstance.get(`/movies`);
     return response.data;
   } catch (error) {
     console.error(

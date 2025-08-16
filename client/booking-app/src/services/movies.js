@@ -1,9 +1,9 @@
 const { axiosInstance } = require("./axiosinstance");
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
+
 export const getAllMovies = async () => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/movies`);
+    const response = await axiosInstance.get(`/movies`);
     return response.data;
   } catch (err) {
     return err.response;
@@ -13,7 +13,7 @@ export const getAllMovies = async () => {
 export const searchMoviesSuggestions = async (query) => {
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/suggestions`,
+      `/suggestions`,
       { params: { query } }
     );
     console.log(response);
@@ -30,7 +30,7 @@ export const searchMoviesSuggestions = async (query) => {
 
 export const searchMovies = async (query) => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/search`, {
+    const response = await axiosInstance.get(`/search`, {
       params: { query },
     });
     return response.data;
@@ -49,7 +49,7 @@ export const getMovieData = async (movieid) => {
   console.log(movieid);
   try {
     const response = await axiosInstance.get(
-      `${API_BASE_URL}/movies/${movieid}`
+      `/movies/${movieid}`
     );
     return response.data;
   } catch (err) {

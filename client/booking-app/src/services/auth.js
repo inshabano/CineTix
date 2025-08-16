@@ -1,10 +1,9 @@
 const { axiosInstance } = require("./axiosinstance");
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const RegisterUser = async (data) => {
   try {
     const response = await axiosInstance.post(
-     `${API_BASE_URL}/register`,
+     `/register`,
       data
     );
     return response.data;
@@ -16,7 +15,7 @@ export const RegisterUser = async (data) => {
 export const LoginUser = async (data) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/login`,
+      `/login`,
       data
     );
     console.log(response);
@@ -29,7 +28,7 @@ export const LoginUser = async (data) => {
 export const forgotPasswordRequest = async (email) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/forgot-password`,
+      `/forgot-password`,
       { email }
     );
     return response.data;
@@ -48,7 +47,7 @@ export const forgotPasswordRequest = async (email) => {
 export const resetPasswordWithToken = async (token, newPassword) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/reset-password/${token}`,
+      `/reset-password/${token}`,
       { newPassword }
     );
     return response.data;

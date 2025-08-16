@@ -1,9 +1,8 @@
 import { axiosInstance } from "./axiosinstance";
 
-const API_BASE_URL = axiosInstance.defaults.baseURL;
 export const getWatchlist = async () => {
   try {
-    const response = await axiosInstance.get(`${API_BASE_URL}/watchlist`);
+    const response = await axiosInstance.get(`/watchlist`);
     return response.data;
   } catch (error) {
     console.error(
@@ -20,7 +19,7 @@ export const getWatchlist = async () => {
 export const addMovieToWatchlist = async (movieId) => {
   try {
     const response = await axiosInstance.post(
-      `${API_BASE_URL}/watchlist/add`,
+      `/watchlist/add`,
       { movieId }
     );
     return response.data;
@@ -40,7 +39,7 @@ export const addMovieToWatchlist = async (movieId) => {
 export const removeMovieFromWatchlist = async (movieId) => {
   try {
     const response = await axiosInstance.delete(
-      `${API_BASE_URL}/watchlist/remove/${movieId}`
+      `/watchlist/remove/${movieId}`
     );
     return response.data;
   } catch (error) {
