@@ -1,70 +1,155 @@
-# Getting Started with Create React App
+#  Cinetix – Online Movie Ticket Booking Platform  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CineTix is a modern full-stack movie booking application built with the MERN stack. Users can browse movies, view theatres and shows, book tickets with real-time seat availability, and manage their bookings. The platform also features role-based dashboards for Users, Theatre Partners, and Admins.
 
-## Available Scripts
+The project is containerized with Docker and deployed on AWS ECS with CI/CD via Jenkins, showcasing end-to-end DevOps practices. 
 
-In the project directory, you can run:
+---
 
-### `npm start`
+##  Live Demo  
+🔗 [https://cinetix.inshabano.live](https://cinetix.inshabano.live)  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Frontend
 
-### `npm test`
+- React (with Hooks & Router)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Axios (API calls)
 
-### `npm run build`
+- AntDesign
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js + Express.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- JWT Authentication
 
-### `npm run eject`
+- Nodemailer (Email confirmations)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### DevOps & Deployment
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Docker (Frontend + Backend images)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- AWS ECS + ECR (Container deployment)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- AWS S3 (Posters)
 
-## Learn More
+- AWS Route 53 (Domain management)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Jenkins (CI/CD pipeline)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ✨ Features
+### Role-Based Access Control (RBAC)
 
-### Code Splitting
+- User: Browse movies, book tickets, manage profile & watchlist
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Partner: Manage theatre shows, view bookings via Partner Dashboard
+  
+- Admin: Manage platform-level configurations and monitor activities
 
-### Analyzing the Bundle Size
+### Movie & Showtime Management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Dynamic movie listings
 
-### Making a Progressive Web App
+- Theatres and shows with seat availability
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Booking Flow
 
-### Advanced Configuration
+- Real-time seat selection
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Email confirmation after successful booking
+  
+### Responsive UI
 
-### Deployment
+- Built with React + Ant Design
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Optimized for desktop and mobile
 
-### `npm run build` fails to minify
+### DevOps & Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Dockerized frontend and backend
+  
+- CI/CD Pipeline with Jenkins → AWS ECS, ECR, S3, Route 53
+  
+- Domain: cinetix.inshabano.live
+
+
+## User Roles & Test Credentials  
+
+### 🎟 User 
+```plaintext
+Email: <your-email>  
+Password: <your-password>
+
+```
+
+### 🎭 Partner (Theatre Owner)
+```plaintext
+Email: testpartner@gmail.com  
+Password: partner
+```
+
+## How It Works
+
+User Flow – Browse movies → Select theatre & showtime → Pick seats → Confirm booking → Get email confirmation.
+
+Partner Flow – Login to dashboard → Add shows → Monitor bookings.
+
+Admin Flow – Manage users, partners, and theatres.
+
+##  API Endpoints
+### Authentication
+
+- POST /register → Register new user
+
+- POST /login → User login
+
+## Movies & Shows
+
+- GET /movies → Get all movies
+
+- GET /movies/:id → Movie details
+
+- GET /shows/movies/:movieId → Showtimes for a movie
+
+### Bookings
+
+- POST /bookings → Create booking
+
+- GET /mybookings → User’s booking history
+
+### Partner Dashboard
+
+- GET /partner-dashboard → Partner’s shows & bookings
+
+### CI/CD Pipeline
+### Continuous Integration (CI)
+
+- Triggered on every push to main
+
+- Build React frontend → Docker image
+
+- Build Node.js backend → Docker image
+
+- Push both images to AWS ECR
+
+### Continuous Deployment (CD)
+
+- ECS pulls latest images
+
+- Updates ECS tasks & services
+
+- Route 53 manages domain → cinetix.inshabano.live
+
+- CloudFront caches static assets for faster delivery
+
+## Contributing
+
+Pull requests are welcome! Feel free to fork and enhance the platform.
+
+## Contact
+
+Author: Insha Bano
+🔗 [LinkedIn](https://www.linkedin.com/in/insha-bano-971866247/) | [GitHub](https://github.com/inshabano) 
